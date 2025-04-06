@@ -6,11 +6,16 @@ public class NPC : MonoBehaviour
     protected CharacterCustomization cc;
     protected string answer;
     protected NPCRoleInfoManager roleInfoManager;
+
     protected void Awake()
-    {
+    {        
+        cc = GetComponent<CharacterCustomization>();
+        cc.InitColors();
+
         // NPCEmotionHandler ÃÊ±âÈ­
         roleInfoManager = new NPCRoleInfoManager();
     }
+
     public string GetRole(string npcName) => roleInfoManager.GetRole(npcName);
     public string GetInstructions(string npcName) => roleInfoManager.GetInstructions(npcName);
     public string GetBackground(string npcName) => roleInfoManager.GetBackground(npcName);

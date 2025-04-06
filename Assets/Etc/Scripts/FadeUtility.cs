@@ -131,5 +131,25 @@ public class FadeUtility : MonoBehaviour
         //     spawnManager.RelocationNPC(npcRole);
 
         yield return FadeOut(screen, 1f);
-    }    
+    }
+
+
+
+
+
+
+    public IEnumerator FadeInAudio(AudioSource source, float duration)
+    {
+        source.volume = 0f; // 처음 볼륨을 0으로 설정
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            source.volume = Mathf.Lerp(0f, 1f, elapsedTime / duration); // 서서히 증가
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        source.volume = 1f; // 최종 볼륨 1
+    }
 }

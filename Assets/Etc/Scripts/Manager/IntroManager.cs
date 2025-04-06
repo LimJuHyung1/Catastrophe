@@ -1,49 +1,32 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Text;
+using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.UI;
-
 
 
 public class IntroManager : MonoBehaviour
 {
-    private int voiceIndex = 0;
     private AudioSource audioSource;
-
-    public AudioClip[] reporterVoices;
+    private CameraSup cameraSup;
+    
     public Text Announcement;
-    public Image screen;    
+    public Image screen;
 
+    public CinemachineCamera TVCam;
+    public CinemachineCamera dollyCam;
 
-    private string[] cueSheet = {
-        "속보입니다. 오늘 새벽, 유명 외과 의사 헨리 박사가 실종되었습니다.",
-        "경찰은 헨리 박사의 차량이 이곳 외곽 도로의 가드레일을 들이받은 채 발견되었으며, " +
-        "헨리 박사의 모습은 사고 현장 근처에서는 확인되지 않았다고 보고하였습니다.",
-        "경찰은 차량 내부에서 혈흔이 발견되었으며, " +
-        "강한 충격으로 인해 운전자가 사고 직후 현장을 벗어났을 가능성을 염두에 두고 있습니다.",
-
-        // (화면이 전환되며 헨리 박사의 프로필 사진과 그의 신상 정보가 화면에 뜬다.)
-        "헨리 박사는 최근 대형 투자사 오리온 캐피탈과의 계약 문제로 논란이 된 바 있습니다.",
-        "오리온 캐피탈 측은 헨리 박사의 병원이 투자금을 적절히 활용하지 못했다며 계약 재검토를 발표했고, " +
-        "양 측의 갈등이 심화된 것으로 알려졌습니다.",
-
-        // (화면이 전환되며, 헨리와 윌리엄의 관계를 다룬 최근 뉴스 기사가 화면에 표시된다.)
-        "얼마 전, 헨리 박사와 오리온 캐피탈의 윌리엄 부사장 간의 투자 계약 차질이 언론을 통해 보도되었으며, " +
-        "두 사람이 이에 대해 비공식적인 논의를 이어왔던 것으로 전해졌습니다.",
-        "경찰은 이 투자 계약 문제와 이번 사건의 연관성을 배제하지 않고 조사 중입니다.",
-
-        // (카메라는 다시 현장으로 돌아와 경찰이 주변을 수색하는 모습을 비춘다.)
-        "현재 경찰은 헨리 박사의 실종과 사고가 단순한 우연인지, 혹은 사건의 배후가 있는지 철저히 조사하고 있습니다.",
-        "새로운 단서가 확보되는 대로 신속히 전해드리겠습니다."
-    };
+    public DialogueScript reporterScript; // 새로 추가된 ScriptableObject 참조
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        cameraSup = new CameraSup(TVCam, dollyCam);
+        cameraSup.ActivateTVCam();
 
+
+        screen.gameObject.SetActive(true);
         StartCoroutine(StartSequence());      
     }
 
@@ -51,8 +34,7 @@ public class IntroManager : MonoBehaviour
     /// 인트로 시퀀스를 시작하는 코루틴
     /// </summary>
     private IEnumerator StartSequence()
-    {
-        StartCoroutine(FadeUtility.Instance.FadeOut(screen, 3f));
+    {        
         yield return StartCoroutine(ShowIntro()); // 인트로 메시지 출력
     }
 
@@ -62,20 +44,38 @@ public class IntroManager : MonoBehaviour
     /// </summary>
     private IEnumerator ShowIntro()
     {
-        string initialText = "Reporter : ";
+        float interval = 0.5f;
 
-        yield return new WaitForSeconds(3.5f);
+        yield return new WaitForSeconds(1f);
+
+        DialogueLine[] lines = reporterScript.dialogueLines;
 
         // 메시지 출력
-        for (int i = 0; i < cueSheet.Length; i++)
-        {            
-            audioSource.clip = reporterVoices[voiceIndex];
-            audioSource.Play();                    
+        for (int i = 0; i < lines.Length; i++)
+        {   
+            if (i == 3)
+                cameraSup.ActivateDollyCam();
+            // i == 5 일 때 신문지 표시하기
+            else if (i == 7)
+                cameraSup.ActivateTVCam();
 
-            StartCoroutine(ShowIntroDispatch(Announcement, cueSheet[i], initialText));
-            yield return new WaitForSeconds(reporterVoices[voiceIndex].length + 1f);
+            audioSource.clip = lines[i].audioClip;
 
-            voiceIndex++;
+            if (i == 0)
+            {
+                StartCoroutine(FadeUtility.Instance.FadeOut(screen, 3f));                
+                audioSource.volume = 0f; // 볼륨 0에서 시작
+                audioSource.Play();
+                StartCoroutine(FadeUtility.Instance.FadeInAudio(audioSource, 2f)); // 2초 동안 볼륨 증가
+            }
+            else
+            {                
+                audioSource.Play();
+            }
+
+
+            StartCoroutine(ShowIntroDispatch(Announcement, lines[i].line));
+            yield return new WaitForSeconds(audioSource.clip.length + interval);
         }       
 
         yield return new WaitForSeconds(3.5f);
@@ -106,7 +106,32 @@ public class IntroManager : MonoBehaviour
         {
             sb.Append(letter);
             t.text = sb.ToString();
-            yield return new WaitForSeconds(0.75f);
+            yield return new WaitForSeconds(0.075f);
         }
+    }
+}
+
+
+public class CameraSup
+{
+    private CinemachineCamera TVCam;
+    private CinemachineCamera dollyCam;
+
+    public CameraSup(CinemachineCamera TVCam, CinemachineCamera dollyCam)
+    {
+        this.TVCam = TVCam;
+        this.dollyCam = dollyCam;
+    }
+
+    public void ActivateTVCam()
+    {       
+        TVCam.Priority = 1;
+        dollyCam.Priority = 0;
+    }
+
+    public void ActivateDollyCam()
+    {
+        TVCam.Priority = 0;
+        dollyCam.Priority = 1;
     }
 }
