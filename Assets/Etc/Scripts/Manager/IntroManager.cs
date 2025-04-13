@@ -16,7 +16,7 @@ public class IntroManager : MonoBehaviour
     public CinemachineCamera TVCam;
     public CinemachineCamera dollyCam;
 
-    public DialogueScript reporterScript; // 새로 추가된 ScriptableObject 참조
+    public HernyHomeDialogueScript reporterScript; // 새로 추가된 ScriptableObject 참조
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

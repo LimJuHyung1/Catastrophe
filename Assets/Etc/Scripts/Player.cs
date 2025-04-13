@@ -1,10 +1,20 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 using AdvancedPeopleSystem;
 
 public class Player : MonoBehaviour
 {
     public ConversationManager conversationManager;
+
+    [SerializeField] private bool isTalking = false; // 대화 중인지 여부
+    public bool IsTalking
+    {
+        get { return isTalking; }
+        set { isTalking = value; }
+    }
+
+
 
     [SerializeField] private float moveSpeed = 3.5f;  // 이동 속도
     [SerializeField] private float lookSensitivity = 0.15f; // 마우스 감도
@@ -24,6 +34,11 @@ public class Player : MonoBehaviour
     private Transform cameraTransform;
     private float rotationY = 0f; // 카메라 회전 값 (위아래)
 
+
+    public float rotateSpeed = 2.0f;        // 회전 속도
+    public float stopThreshold = 0.01f;     // 회전 종료 조건 (각도 차이)
+    private Coroutine lookCoroutine;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -37,10 +52,39 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (!conversationManager.GetIsTalking())
+        if (!isTalking && !conversationManager.GetIsTalking())
         {
             Move();
             Look();
+
+
+            if (cam.RaycastFromCamera() != null)
+            {            
+                if(cam.RaycastFromCamera().layer == LayerMask.NameToLayer("Evidence"))
+                {
+                    // UI 텍스트 표시하기
+                }
+
+
+                // 마우스 왼쪽 버튼 클릭 시 Raycast 실행
+                if (Mouse.current.leftButton.wasPressedThisFrame)
+                {
+                    int tmpLayer = cam.RaycastFromCamera().layer;
+                    if (tmpLayer == LayerMask.NameToLayer("NPC"))
+                    {
+                        conversationManager.GetNPCRole(cam.RaycastFromCamera().GetComponent<NPCRole>());
+                        conversationManager.StartConversation();
+                    }
+                    // 증거 레이어이고 증거가 발견되지 않은 경우
+                    else if (tmpLayer == LayerMask.NameToLayer("Evidence")
+                        && !cam.RaycastFromCamera().GetComponent<Evidence>().IsFound)
+                    {
+                        isTalking = true; // 독백 시작
+                        cam.RaycastFromCamera().GetComponent<Evidence>().FindEvidence();
+                    }
+                }
+            }
+
 
             // 마우스 왼쪽 버튼 클릭 시 Raycast 실행
             if (Mouse.current.leftButton.wasPressedThisFrame)
@@ -148,5 +192,40 @@ public class Player : MonoBehaviour
     {
         // move = Vector3.zero;
         animator.SetBool("IsWalking", false);
+    }
+
+
+
+
+
+
+    /// <summary>
+    /// 지정한 위치를 부드럽게 바라봅니다.
+    /// </summary>
+    /// <param name="targetPosition">바라볼 위치</param>
+    public void LookAtPosition(Transform targetPosition)
+    {
+        // 기존 회전 중이면 중단
+        if (lookCoroutine != null)
+            StopCoroutine(lookCoroutine);
+
+        lookCoroutine = StartCoroutine(SmoothLookAt(targetPosition));
+    }
+
+    private IEnumerator SmoothLookAt(Transform targetPosition)
+    {
+        Vector3 direction = targetPosition.position - cam.transform.position;
+        if (direction == Vector3.zero) yield break;
+
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+        while (Quaternion.Angle(cam.transform.rotation, targetRotation) > stopThreshold)
+        {
+            cam.transform.rotation = Quaternion.Slerp(cam.transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        cam.transform.rotation = targetRotation; // 정확히 고정
+        lookCoroutine = null;
     }
 }

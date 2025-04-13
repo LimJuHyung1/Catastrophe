@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d223df3de934a5a47909409b5bba0f2e, type: 3}
+  m_Name: Herny's Home Evidence Data
+  m_EditorClassIdentifier: 
+  evidenceDatas:
+  - koreanEvidenceName: "\uD5E8\uB9AC\uC758 \uD734\uB300\uC804\uD654 \uD654\uBA74\uC5D0
+      \uD45C\uC2DC\uB41C \uBB38\uC790 \uBA54\uC2DC\uC9C0"
+    englishEvidenceName: "Text Message on Henry\u2019s Phone"
+    description: 
+    icon: {fileID: 0}
+    playerAudioClip: {fileID: 8300000, guid: 2d4c8fdd9ea37554fa6573e71610f2ee, type: 3}
+    playerLine: "\uC774 \uC2DC\uAC04\uC5D0 \u2018\uD63C\uC790 \uCC3D\uACE0\uB85C
+      \uC624\uB77C\u2019\uB294 \uBB38\uC790\uB77C\u2026 \uC774\uAC74 \uB2E8\uC21C\uD55C
+      \uC678\uCD9C\uC774 \uC544\uB2C8\uC5C8\uB124\uC694."
+  - koreanEvidenceName: "\uD22C\uC790 \uACC4\uC57D\uC11C \uC0AC\uBCF8"
+    englishEvidenceName: Copy of Investment Contract
+    description: 
+    icon: {fileID: 0}
+    playerAudioClip: {fileID: 8300000, guid: 135f267f784ad04439b698b7345c5b79, type: 3}
+    playerLine: "\uC7A0\uAE50\uB9CC\uC694\u2026 \uD22C\uC790\uAE08\uC774 30\uC5B5
+      \uC6D0\uC774\uC694? \uC774 \uC815\uB3C4 \uADDC\uBAA8\uC600\uB2E4\uB2C8, \uD5E8\uB9AC
+      \uBC15\uC0AC\u2026 \uB3C4\uB300\uCCB4 \uC65C \uC774\uB7F0 \uC870\uAC74\uC744
+      \uBC1B\uC544\uB4E4\uC778 \uAC70\uC8E0?"
+  - koreanEvidenceName: "\uBCD1\uC6D0 \uB0B4\uBD80 \uD68C\uACC4 \uBCF4\uACE0\uC11C"
+    englishEvidenceName: Internal Hospital Accounting Report
+    description: 
+    icon: {fileID: 0}
+    playerAudioClip: {fileID: 8300000, guid: 11f60baf26e9e474283a4d7262372b26, type: 3}
+    playerLine: "\uCD5C\uADFC 3\uAC1C\uC6D4 \uC801\uC790. \u2018\uC774\uBC88 \uB2EC\uC774
+      \uACE0\uBE44\uB2E4\u2019\u2026 \uBCD1\uC6D0\uC774 \uC0DD\uAC01\uBCF4\uB2E4
+      \uB354 \uC704\uD5D8\uD55C \uC0C1\uD669\uC774\uC5C8\uB124\uC694."
+  - koreanEvidenceName: "\uC120\uBB3C \uC0C1\uC790 \uC18D \uBAA9\uAC78\uC774"
+    englishEvidenceName: Necklace Inside Gift Box
+    description: 
+    icon: {fileID: 0}
+    playerAudioClip: {fileID: 8300000, guid: b4bbc245353d2a34483c367f1e538013, type: 3}
+    playerLine: "\uC18C\uD53C\uC544\uC758 \uC774\uB2C8\uC15C\uC740 \uC544\uB2C8\uACE0\u2026
+      \uC774 \uBAA9\uAC78\uC774\uB294 \uB204\uAD6C\uB97C \uC704\uD55C \uC120\uBB3C\uC774\uC5C8\uC744\uAE4C\uC694?"
+  - koreanEvidenceName: "\uC774\uD63C \uC11C\uB958 \uCD08\uC548"
+    englishEvidenceName: Draft of Divorce Papers
+    description: 
+    icon: {fileID: 0}
+    playerAudioClip: {fileID: 8300000, guid: 4e667ecf513f2ba4790dd21c8730efed, type: 3}
+    playerLine: "\uC774\uAC74\u2026 \uC774\uD63C \uC11C\uB958 \uCD08\uC548\uC774\uB124\uC694.
+      \uD5E8\uB9AC \uBC15\uC0AC\uB294 \uC774\uBBF8 \uACB0\uC815\uC744 \uB0B4\uB838\uB358
+      \uAC78\uC9C0\uB3C4 \uBAA8\uB974\uACA0\uC5B4\uC694."
+  - koreanEvidenceName: "\uAD6C\uACA8\uC9C4 \uAC00\uC871 \uC0AC\uC9C4"
+    englishEvidenceName: Crumpled Family Photo
+    description: "\uAC00\uC871 \uC0AC\uC9C4\uC774 \uAD6C\uACA8\uC838 \uC788\uB2E4\uB2C8\u2026
+      \uC65C \uC774\uB7F0 \uC9D3\uC744 \uD55C \uAC78\uAE4C\uC694?"
+    icon: {fileID: 0}
+    playerAudioClip: {fileID: 8300000, guid: 557c1aa269379b74a94f65efc7d87036, type: 3}
+    playerLine: "\uAC00\uC871 \uC0AC\uC9C4\uC774 \uAD6C\uACA8\uC838 \uC788\uB2E4\uB2C8\u2026
+      \uC65C \uC774\uB7F0 \uC9D3\uC744 \uD55C \uAC78\uAE4C\uC694?"

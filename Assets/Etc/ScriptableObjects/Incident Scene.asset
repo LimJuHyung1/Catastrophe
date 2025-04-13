@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1055dd6230766be43bd0633be6407793, type: 3}
+  m_Name: Incident Scene
+  m_EditorClassIdentifier: 
+  dialogueLines:
+  - characterName: Reporter
+    line: "\uC18D\uBCF4\uC785\uB2C8\uB2E4. \uC624\uB298 \uC0C8\uBCBD, \uC720\uBA85
+      \uC678\uACFC \uC758\uC0AC \uD5E8\uB9AC \uBC15\uC0AC\uAC00 \uC2E4\uC885\uB418\uC5C8\uC2B5\uB2C8\uB2E4."
+    audioClip: {fileID: 8300000, guid: 6e2fbaca2005f1f498ca055beef417cf, type: 3}
+  - characterName: Reporter
+    line: "\uACBD\uCC30\uC740 \uD5E8\uB9AC \uBC15\uC0AC\uC758 \uCC28\uB7C9\uC774
+      \uC774\uACF3 \uC678\uACFD \uB3C4\uB85C\uC758 \uAC00\uB4DC\uB808\uC77C\uC744
+      \uB4E4\uC774\uBC1B\uC740 \uCC44 \uBC1C\uACAC\uB418\uC5C8\uC73C\uBA70, \uD5E8\uB9AC
+      \uBC15\uC0AC\uC758 \uBAA8\uC2B5\uC740 \uC0AC\uACE0 \uD604\uC7A5 \uADFC\uCC98\uC5D0\uC11C\uB294
+      \uD655\uC778\uB418\uC9C0 \uC54A\uC558\uB2E4\uACE0 \uBCF4\uACE0\uD558\uC600\uC2B5\uB2C8\uB2E4."
+    audioClip: {fileID: 8300000, guid: a852c6862b2c1ec4284eb24e35834d69, type: 3}
+  - characterName: Reporter
+    line: "\uACBD\uCC30\uC740 \uCC28\uB7C9 \uB0B4\uBD80\uC5D0\uC11C \uD608\uD754\uC774
+      \uBC1C\uACAC\uB418\uC5C8\uC73C\uBA70, \uAC15\uD55C \uCDA9\uACA9\uC73C\uB85C
+      \uC778\uD574 \uC6B4\uC804\uC790\uAC00 \uC0AC\uACE0 \uC9C1\uD6C4 \uD604\uC7A5\uC744
+      \uBC97\uC5B4\uB0AC\uC744 \uAC00\uB2A5\uC131\uC744 \uC5FC\uB450\uC5D0 \uB450\uACE0
+      \uC788\uC2B5\uB2C8\uB2E4."
+    audioClip: {fileID: 8300000, guid: feda7ff1e0d22b943bb7a407df2197b4, type: 3}
+  - characterName: Reporter
+    line: "\uD5E8\uB9AC \uBC15\uC0AC\uB294 \uCD5C\uADFC \uB300\uD615 \uD22C\uC790\uC0AC
+      \uC624\uB9AC\uC628 \uCE90\uD53C\uD0C8\uACFC\uC758 \uACC4\uC57D \uBB38\uC81C\uB85C
+      \uB17C\uB780\uC774 \uB41C \uBC14 \uC788\uC2B5\uB2C8\uB2E4."
+    audioClip: {fileID: 8300000, guid: e94c2ff9514b811449f3c7f96966aab1, type: 3}
+  - characterName: Reporter
+    line: "\uC624\uB9AC\uC628 \uCE90\uD53C\uD0C8 \uCE21\uC740 \uD5E8\uB9AC \uBC15\uC0AC\uC758
+      \uBCD1\uC6D0\uC774 \uD22C\uC790\uAE08\uC744 \uC801\uC808\uD788 \uD65C\uC6A9\uD558\uC9C0
+      \uBABB\uD588\uB2E4\uBA70 \uACC4\uC57D \uC7AC\uAC80\uD1A0\uB97C \uBC1C\uD45C\uD588\uACE0,
+      \uC591 \uCE21\uC758 \uAC08\uB4F1\uC774 \uC2EC\uD654\uB41C \uAC83\uC73C\uB85C
+      \uC54C\uB824\uC84C\uC2B5\uB2C8\uB2E4."
+    audioClip: {fileID: 8300000, guid: c7f1391b8277b8444939796b786f95a5, type: 3}
+  - characterName: Reporter
+    line: "\uC5BC\uB9C8 \uC804, \uD5E8\uB9AC \uBC15\uC0AC\uC640 \uC624\uB9AC\uC628
+      \uCE90\uD53C\uD0C8\uC758 \uC70C\uB9AC\uC5C4 \uBD80\uC0AC\uC7A5 \uAC04\uC758
+      \uD22C\uC790 \uACC4\uC57D \uCC28\uC9C8\uC774 \uC5B8\uB860\uC744 \uD1B5\uD574
+      \uBCF4\uB3C4\uB418\uC5C8\uC73C\uBA70, \uB450 \uC0AC\uB78C\uC774 \uC774\uC5D0
+      \uB300\uD574 \uBE44\uACF5\uC2DD\uC801\uC778 \uB17C\uC758\uB97C \uC774\uC5B4\uC654\uB358
+      \uAC83\uC73C\uB85C \uC804\uD574\uC84C\uC2B5\uB2C8\uB2E4."
+    audioClip: {fileID: 8300000, guid: 4fc670f0bcd1f0d479a032562ba0877d, type: 3}
+  - characterName: Reporter
+    line: "\uACBD\uCC30\uC740 \uC774 \uD22C\uC790 \uACC4\uC57D \uBB38\uC81C\uC640
+      \uC774\uBC88 \uC0AC\uAC74\uC758 \uC5F0\uAD00\uC131\uC744 \uBC30\uC81C\uD558\uC9C0
+      \uC54A\uACE0 \uC870\uC0AC \uC911\uC785\uB2C8\uB2E4."
+    audioClip: {fileID: 8300000, guid: 73077123f7f3fd0438156843358aefe6, type: 3}
+  - characterName: Reporter
+    line: "\uD604\uC7AC \uACBD\uCC30\uC740 \uD5E8\uB9AC \uBC15\uC0AC\uC758 \uC2E4\uC885\uACFC
+      \uC0AC\uACE0\uAC00 \uB2E8\uC21C\uD55C \uC6B0\uC5F0\uC778\uC9C0, \uD639\uC740
+      \uC0AC\uAC74\uC758 \uBC30\uD6C4\uAC00 \uC788\uB294\uC9C0 \uCCA0\uC800\uD788
+      \uC870\uC0AC\uD558\uACE0 \uC788\uC2B5\uB2C8\uB2E4."
+    audioClip: {fileID: 8300000, guid: 3c763f9eb067ff641945838d6e50c72a, type: 3}
+  - characterName: Reporter
+    line: "\uC0C8\uB85C\uC6B4 \uB2E8\uC11C\uAC00 \uD655\uBCF4\uB418\uB294 \uB300\uB85C
+      \uC2E0\uC18D\uD788 \uC804\uD574\uB4DC\uB9AC\uACA0\uC2B5\uB2C8\uB2E4."
+    audioClip: {fileID: 8300000, guid: 46b95d80b6cdc284d95bd98db90b13f9, type: 3}

@@ -22,4 +22,9 @@ public abstract class DoorBase : MonoBehaviour
     }
 
     protected abstract System.Collections.IEnumerator OpenCoroutine();
+
+    public bool GetIsOpened()
+    {
+        return isOpened;
+    }
 }
