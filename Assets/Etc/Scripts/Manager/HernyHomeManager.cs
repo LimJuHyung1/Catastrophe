@@ -8,17 +8,17 @@ public class HernyHomeManager : MonoBehaviour
     public float typeSpeed = 0.065f; // 한 글자 출력 간격 (조정 가능)
 
     public HernyHomeDialogueScript dialogueScript;
-    public GameObject dialogue;
+    public GameObject dialogue;    
 
     public Sophia sophia;
     public Player player;
     public GameObject chair;
 
-    public Image screen;
-
+    public Image screen;    
+    
     private AudioSource audioSource;
     private Text npcName;
-    private Text line;
+    private Text line;    
 
     private void Awake()
     {
@@ -28,6 +28,7 @@ public class HernyHomeManager : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
         }
 
+        dialogue.SetActive(false);
         npcName = dialogue.transform.GetChild(0).GetComponent<Text>();
         line = dialogue.transform.GetChild(1).GetComponent<Text>();
     }
@@ -99,6 +100,8 @@ public class HernyHomeManager : MonoBehaviour
 
     public IEnumerator FindEvidence(string playerLine, AudioClip playerAudioClip)
     {
+        dialogue.SetActive(true); // 독백 시작
+
         npcName.text = "수잔";
         Debug.LogWarning(playerLine);
         StartCoroutine(TypeLine(playerLine));

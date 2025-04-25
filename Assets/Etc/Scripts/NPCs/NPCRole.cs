@@ -39,12 +39,7 @@ public class NPCRole : NPC
         ChatMessage systemMessage = new ChatMessage
         {            
             Role = "system",
-            Content = GetRole(npcName)
-            + GetInstructions(npcName)
-            + GetBackground(npcName)
-            + GetFriends(npcName)
-            + GetAlibi(npcName)
-            + GetResponseGuidelines(npcName)            
+            Content = GetPrompt(npcName) // 각 NPC의 프롬프트를 가져옴        
         };
         chatMessages.Add(systemMessage);
     }
@@ -69,7 +64,7 @@ public class NPCRole : NPC
         CreateChatCompletionRequest request = new CreateChatCompletionRequest
         {
             Messages = chatMessages,
-            Model = "gpt-3.5-turbo"                 // chatGPT 3.5 버전 사용
+            Model = "gpt-4o-mini"                 // chatGPT 3.5 버전 사용 gpt-3.5-turbo
         };
 
         var response = await openAIApi.CreateChatCompletion(request);

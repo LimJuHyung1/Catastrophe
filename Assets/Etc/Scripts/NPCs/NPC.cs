@@ -19,10 +19,5 @@ public class NPC : MonoBehaviour
         roleInfoManager = new NPCRoleInfoManager();
     }
 
-    public string GetRole(string npcName) => roleInfoManager.GetRole(npcName);
-    public string GetInstructions(string npcName) => roleInfoManager.GetInstructions(npcName);
-    public string GetBackground(string npcName) => roleInfoManager.GetBackground(npcName);
-    public string GetFriends(string npcName) => roleInfoManager.GetFriends(npcName);
-    public string GetAlibi(string npcName) => roleInfoManager.GetAlibi(npcName);
-    public string GetResponseGuidelines(string npcName) => roleInfoManager.GetResponseGuidelines(npcName);
+    public string GetPrompt(string npcName) => roleInfoManager.GetPrompt(npcName);
 }

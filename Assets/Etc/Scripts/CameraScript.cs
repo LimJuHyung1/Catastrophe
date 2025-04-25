@@ -8,7 +8,7 @@ public class CameraScript : MonoBehaviour
     void Awake()
     {
         mainCamera = Camera.main;
-        targetLayers = LayerMask.GetMask("NPC", "Evidence"); // Awake에서 설정
+        targetLayers = LayerMask.GetMask("NPC", "Evidence", "Door"); // Awake에서 설정
     }
 
 
@@ -49,7 +49,7 @@ public class CameraScript : MonoBehaviour
             return hit.collider.gameObject;
         }
 
-        Debug.Log("No Object Hit");
+        // Debug.Log("No Object Hit");
         return null;
     }
 }

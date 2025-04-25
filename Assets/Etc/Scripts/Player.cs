@@ -6,6 +6,8 @@ using AdvancedPeopleSystem;
 public class Player : MonoBehaviour
 {
     public ConversationManager conversationManager;
+    public GameObject clickMark;
+    public GameObject FMark;
 
     [SerializeField] private bool isTalking = false; // 대화 중인지 여부
     public bool IsTalking
@@ -35,8 +37,8 @@ public class Player : MonoBehaviour
     private float rotationY = 0f; // 카메라 회전 값 (위아래)
 
 
-    public float rotateSpeed = 2.0f;        // 회전 속도
-    public float stopThreshold = 0.01f;     // 회전 종료 조건 (각도 차이)
+    private float rotateSpeed = 2.0f;        // 회전 속도
+    private float stopThreshold = 0.01f;     // 회전 종료 조건 (각도 차이)    
     private Coroutine lookCoroutine;
 
     private void Awake()
@@ -48,9 +50,10 @@ public class Player : MonoBehaviour
         cc = GetComponent<CharacterCustomization>();
         cc.InitColors();
         cameraTransform = Camera.main.transform; // 메인 카메라 가져오기
+        SetActiveMark(false);
     }
 
-    private void Update()
+    void Update()
     {
         if (!isTalking && !conversationManager.GetIsTalking())
         {
@@ -59,12 +62,15 @@ public class Player : MonoBehaviour
 
 
             if (cam.RaycastFromCamera() != null)
-            {            
-                if(cam.RaycastFromCamera().layer == LayerMask.NameToLayer("Evidence"))
+            {
+                if (cam.RaycastFromCamera().layer == LayerMask.NameToLayer("Evidence")
+                    && !cam.RaycastFromCamera().GetComponent<Evidence>().IsFound)
+                    clickMark.gameObject.SetActive(true);
+                else if (cam.RaycastFromCamera().layer == LayerMask.NameToLayer("Door")
+                    && !cam.RaycastFromCamera().GetComponent<DoorBase>().GetIsOpened())
                 {
-                    // UI 텍스트 표시하기
-                }
-
+                    FMark.gameObject.SetActive(true);                    
+                }                    
 
                 // 마우스 왼쪽 버튼 클릭 시 Raycast 실행
                 if (Mouse.current.leftButton.wasPressedThisFrame)
@@ -80,24 +86,20 @@ public class Player : MonoBehaviour
                         && !cam.RaycastFromCamera().GetComponent<Evidence>().IsFound)
                     {
                         isTalking = true; // 독백 시작
+                        clickMark.gameObject.SetActive(false);
                         cam.RaycastFromCamera().GetComponent<Evidence>().FindEvidence();
                     }
                 }
-            }
 
-
-            // 마우스 왼쪽 버튼 클릭 시 Raycast 실행
-            if (Mouse.current.leftButton.wasPressedThisFrame)
-            {
-                if(cam.RaycastFromCamera() != null)
+                if (Input.GetKey(KeyCode.F))
                 {
-                    int tmpLayer = cam.RaycastFromCamera().layer;
-                    if(tmpLayer == LayerMask.NameToLayer("NPC"))
-                    {
-                        conversationManager.GetNPCRole(cam.RaycastFromCamera().GetComponent<NPCRole>());
-                        conversationManager.StartConversation();
-                    }
+                    FMark.gameObject.SetActive(false);
+                    cam.RaycastFromCamera().GetComponent<DoorBase>().Open();
                 }
+            }
+            else
+            {
+                SetActiveMark(false);
             }
         }        
     }
@@ -227,5 +229,11 @@ public class Player : MonoBehaviour
 
         cam.transform.rotation = targetRotation; // 정확히 고정
         lookCoroutine = null;
+    }
+
+    private void SetActiveMark(bool state)
+    {
+        clickMark.SetActive(state);
+        FMark.SetActive(state);
     }
 }

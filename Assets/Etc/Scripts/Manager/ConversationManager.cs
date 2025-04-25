@@ -8,14 +8,15 @@ using UnityEngine.UI;
 public class ConversationManager : BaseManager
 {
     public Image screen;
-    public InputField inputField;
-    public Button endConversationBtn;  // 대화 종료 버튼
-    public Text answer;
-    
+    public GameObject conversationUI;    
+    public GameObject dialogue;  // 대화 UI
 
     [SerializeField] GameObject waitingMark;  // NPC가 발언 준비 중 표시
     [SerializeField] GameObject clickMark;  // 플레이어가 입력 가능할 때 표시
-    [SerializeField] Text NPCAnswer;
+
+    private Button endConversationBtn;  // 대화 종료 버튼
+    private InputField inputField;   
+    private Text NPCLine;
 
     public string tmpAnswer = "";
     public string tmpQuestion = "";
@@ -43,7 +44,11 @@ public class ConversationManager : BaseManager
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        NPCLine = dialogue.transform.GetChild(1).GetComponent<Text>();
+        endConversationBtn = conversationUI.transform.GetChild(0).GetComponent<Button>();
+        inputField = conversationUI.transform.GetChild(1).GetComponent<InputField>();
+
+        conversationUI.SetActive(false);
     }
 
     /// <summary>
@@ -137,9 +142,8 @@ public class ConversationManager : BaseManager
     private IEnumerator StartConversationCoroutine()
     {
         yield return FadeUtility.Instance.SwitchCameraWithFade(screen, player, npcRole);
-        
-        // gameManager.uIManager.SetConversationUI(true);        
-        // gameManager.uIManager.SetSpeakingUI();
+        dialogue.SetActive(true);
+        conversationUI.SetActive(true);        
         // SetAudio();
     }
 
@@ -147,21 +151,21 @@ public class ConversationManager : BaseManager
     /// 대화를 종료하는 메서드 (NPC와 대화 종료 시 실행)
     /// </summary>
     public void EndConversation()
-    {
-        isTalking = false;
+    {        
+        dialogue.SetActive(false);
+        conversationUI.SetActive(false);
         StartCoroutine(EndConversationCoroutine());
     }
 
     private IEnumerator EndConversationCoroutine()
     {
         SetNullInputField();
-        // SetConversationUI(false);
         RemoveOnEndEditListener();
         SetBlankAnswerText();
 
         yield return FadeUtility.Instance.SwitchCameraWithFade(
             screen, player, npcRole);
-
+        
         CursorManager.Instance.OnVisualization();
         isTalking = false;
         RemoveNPCRole();
@@ -172,19 +176,10 @@ public class ConversationManager : BaseManager
     /// </summary>
     public void SetConversationUI(bool b)
     {
-        // SetActiveUIElements(b, inputField.gameObject, chatBox.gameObject, endConversationBtn.gameObject);
+        conversationUI.SetActive(b);
     }
 
-    /// <summary>
-    /// UI 요소들을 활성화/비활성화하는 헬퍼 메서드
-    /// </summary>
-    private void SetActiveUIElements(bool isActive, params GameObject[] elements)
-    {
-        foreach (GameObject element in elements)
-        {
-            element.SetActive(isActive);
-        }
-    }
+
     public void RemoveOnEndEditListener()
     {
         inputField.onEndEdit.RemoveAllListeners();
@@ -195,7 +190,7 @@ public class ConversationManager : BaseManager
     /// </summary>
     public void SetBlankAnswerText()
     {
-        NPCAnswer.text = "";
+        NPCLine.text = "";
     }
 
     /// <summary>
@@ -244,7 +239,7 @@ public class ConversationManager : BaseManager
         t.text = ""; // 텍스트 초기화
         Coroutine dialogSoundCoroutine = null;
 
-        SetNPCSpeakingUI(true);
+        SetWaitingUI(true);
         dialogSoundCoroutine = StartCoroutine(PlayDialogSound());
 
         yield return new WaitUntil(() => waitToSkip);
@@ -269,7 +264,7 @@ public class ConversationManager : BaseManager
         // 코루틴이 실행되었을 경우에만 종료 처리
         if (dialogSoundCoroutine != null)
         {
-            SetNPCSpeakingUI(false);
+            SetWaitingUI(false);
             StopCoroutine(dialogSoundCoroutine); // PlayDialogSound 코루틴 중지
             // SoundManager.Instance.StopTextSound();
         }
@@ -292,7 +287,7 @@ public class ConversationManager : BaseManager
 
             ChatMessage message = new ChatMessage { Content = sentence };
             // npcRole.PlayEmotion(message);
-
+            Debug.Log(GetNPCAnswer());
             yield return StartCoroutine(ShowLine(GetNPCAnswer(), sentence));
 
             yield return new WaitUntil(() => isAbleToGoNext);
@@ -349,14 +344,14 @@ public class ConversationManager : BaseManager
     // NPC 답변 반환
     public Text GetNPCAnswer()
     {
-        return NPCAnswer;
+        return NPCLine;
     }
 
     /// <summary>
     /// NPC의 발언 상태에 따라 UI 설정
     /// </summary>
     /// <param name="isSpeaking">NPC가 발언 중인지 여부</param>
-    public void SetNPCSpeakingUI(bool isSpeaking)
+    public void SetWaitingUI(bool isSpeaking)
     {
         waitingMark.gameObject.SetActive(isSpeaking);
         clickMark.gameObject.SetActive(!isSpeaking);
