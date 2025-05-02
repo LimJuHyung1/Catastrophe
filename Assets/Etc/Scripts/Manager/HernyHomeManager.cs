@@ -5,17 +5,20 @@ using System.Collections;
 
 public class HernyHomeManager : MonoBehaviour
 {
-    public float typeSpeed = 0.065f; // 한 글자 출력 간격 (조정 가능)
-
-    public HernyHomeDialogueScript dialogueScript;
-    public GameObject dialogue;    
+    public DialogueScript dialogueScript;
+    public GameObject dialogue;
+    public Transform startPosition;
 
     public Sophia sophia;
     public Player player;
     public GameObject chair;
 
-    public Image screen;    
-    
+    public Image[] slides;
+    public Image screen;
+
+    private float typeSpeed = 0.065f; // 한 글자 출력 간격 (조정 가능)
+    private float duration = 1.0f;     // 이동에 걸리는 시간
+
     private AudioSource audioSource;
     private Text npcName;
     private Text line;    
@@ -28,9 +31,11 @@ public class HernyHomeManager : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
         }
 
-        dialogue.SetActive(false);
-        npcName = dialogue.transform.GetChild(0).GetComponent<Text>();
-        line = dialogue.transform.GetChild(1).GetComponent<Text>();
+        npcName = dialogue.transform.GetChild(1).GetChild(0).GetComponent<Text>();
+        line = dialogue.transform.GetChild(1).GetChild(1).GetComponent<Text>();
+
+        player.transform.position = startPosition.position; // 플레이어 위치 초기화
+        player.transform.rotation = Quaternion.Euler(new Vector3(0, -90, 0));
     }
 
     private void Start()
@@ -38,22 +43,22 @@ public class HernyHomeManager : MonoBehaviour
         if (dialogueScript != null)
         {
             // 실제로 할 때 아래 코루틴 실행해야 함
-            // StartCoroutine(PlayDialogueAudioClips());
-            sophia.SitOnAChair(chair.transform); // NPC 대화 종료
+            StartCoroutine(PlayDialogueAudioClips());
+            // sophia.SitOnAChair(chair.transform); // NPC 대화 종료
         }
     }
 
     private IEnumerator PlayDialogueAudioClips()
     {
         player.IsTalking = true; // 대화 시작 시 플레이어 대화 상태 설정
+        dialogue.SetActive(true);
         sophia.TurnTowardPlayer(player.transform); // NPC가 플레이어를 바라보도록 설정
         StartCoroutine(FadeUtility.Instance.FadeOut(screen, 2f));        
         player.LookAtPosition(sophia.transform.GetChild(0).transform); // 플레이어가 NPC를 바라보도록 설정
 
         yield return new WaitForSeconds(1f); // NPC가 플레이어를 바라보는 시간
 
-        FadeUtility.Instance.FadeIn(npcName, 1f);
-        FadeUtility.Instance.FadeIn(line, 1f);
+        Slide(true);
 
         foreach (DialogueLine line in dialogueScript.dialogueLines)
         {
@@ -78,8 +83,8 @@ public class HernyHomeManager : MonoBehaviour
             }
         }
 
-        FadeUtility.Instance.FadeOut(npcName, 2f);
-        FadeUtility.Instance.FadeOut(line, 2f);        
+        Slide(false);
+
         yield return FadeUtility.Instance.FadeIn(screen, 2f); // 대화가 끝나면 화면 페이드 인
         sophia.SitOnAChair(chair.transform); // NPC 대화 종료
         yield return FadeUtility.Instance.FadeOut(screen, 2f); // 대화가 끝나면 화면 페이드 인        
@@ -100,17 +105,73 @@ public class HernyHomeManager : MonoBehaviour
 
     public IEnumerator FindEvidence(string playerLine, AudioClip playerAudioClip)
     {
-        dialogue.SetActive(true); // 독백 시작
-
         npcName.text = "수잔";
+
+        Slide(true);
+
         Debug.LogWarning(playerLine);
         StartCoroutine(TypeLine(playerLine));
         audioSource.clip = playerAudioClip;
         audioSource.Play();
-        
+
         yield return new WaitForSeconds(playerAudioClip.length + 0.5f);
 
-        dialogue.SetActive(false); // 독백 종료
+        Slide(false);
+
         player.IsTalking = false; // 독백 종료 시 증거 탐색 가능하게 설정
     }
+
+
+
+
+
+    private void FadeDialogue(bool isTalking, float duration = 1f)
+    {
+        if (isTalking)
+        {
+            StartCoroutine(FadeUtility.Instance.FadeIn(npcName, duration));
+            StartCoroutine(FadeUtility.Instance.FadeIn(line, duration));
+        }
+        else
+        {
+            StartCoroutine(FadeUtility.Instance.FadeOut(npcName, duration));
+            StartCoroutine(FadeUtility.Instance.FadeOut(line, duration));
+        }
+    }
+    public void Slide(bool isTalking, float fadeDuration = 1f)
+    {
+        SlideMove(0, isTalking, fadeDuration);
+        SlideMove(1, isTalking, fadeDuration);
+    }
+    private void SlideMove(int index, bool isOn, float fadeDuration)
+    {
+        if (index < 0 || index >= slides.Length)
+        {
+            Debug.LogWarning("Slide index out of range.");
+            return;
+        }
+
+        RectTransform tmp = slides[index].GetComponent<RectTransform>();
+        float y = isOn ? 0f : (index == 0 ? tmp.rect.height : -tmp.rect.height);  // 방향에 따라 위치 계산
+        Vector2 targetPosition = new Vector2(tmp.anchoredPosition.x, y);
+
+        StartCoroutine(SmoothMove(tmp, tmp.anchoredPosition, targetPosition, isOn, fadeDuration));
+    }
+
+    private IEnumerator SmoothMove(RectTransform rect, Vector2 startPos, Vector2 endPos, bool isOn, float fadeDuration)
+    {
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            rect.anchoredPosition = Vector2.Lerp(startPos, endPos, t);
+            yield return null;
+        }
+
+        rect.anchoredPosition = endPos;
+        FadeDialogue(isOn, fadeDuration);
+    }
+
 }

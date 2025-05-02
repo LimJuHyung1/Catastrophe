@@ -78,8 +78,15 @@ public class Player : MonoBehaviour
                     int tmpLayer = cam.RaycastFromCamera().layer;
                     if (tmpLayer == LayerMask.NameToLayer("NPC"))
                     {
-                        conversationManager.GetNPCRole(cam.RaycastFromCamera().GetComponent<NPCRole>());
-                        conversationManager.StartConversation();
+                        if (cam.RaycastFromCamera().CompareTag("Nurse"))
+                        {
+                            cam.RaycastFromCamera().GetComponent<Nurse>().hospitalManager.StartCoroutinePlayDialogue();
+                        }
+                        else
+                        {
+                            conversationManager.GetNPCRole(cam.RaycastFromCamera().GetComponent<NPCRole>());
+                            conversationManager.StartConversation();
+                        }                                                
                     }
                     // 증거 레이어이고 증거가 발견되지 않은 경우
                     else if (tmpLayer == LayerMask.NameToLayer("Evidence")
@@ -211,8 +218,11 @@ public class Player : MonoBehaviour
         if (lookCoroutine != null)
             StopCoroutine(lookCoroutine);
 
-        lookCoroutine = StartCoroutine(SmoothLookAt(targetPosition));
+        lookCoroutine = StartCoroutine(SmoothLookAt(targetPosition));        
     }
+
+    public void ZoomIn() { cameraTransform.GetComponent<CameraScript>().ZoomTo(true); }
+    public void ZoomOut() { cameraTransform.GetComponent<CameraScript>().ZoomTo(false); }
 
     private IEnumerator SmoothLookAt(Transform targetPosition)
     {

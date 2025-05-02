@@ -1,10 +1,18 @@
 using UnityEngine;
+using System.Collections;
+
 
 public class CameraScript : MonoBehaviour
 {
     private float rayDistance = 3f; // Ray의 최대 거리
     private LayerMask targetLayers;
     private Camera mainCamera;
+
+    [SerializeField] private float zoomInFOV = 30f;   // 줌 인 할 때 목표 FOV
+    [SerializeField] private float zoomOutFOV = 60f;  // 줌 아웃 할 때 목표 FOV
+    [SerializeField] private float zoomSpeed = 5f;    // 줌 속도
+    private Coroutine zoomCoroutine;                 // 현재 실행 중인 코루틴 저장용
+
     void Awake()
     {
         mainCamera = Camera.main;
@@ -28,6 +36,7 @@ public class CameraScript : MonoBehaviour
         // 새로운 방향 벡터를 사용하여 카메라 회전 설정
         transform.rotation = Quaternion.LookRotation(direction.normalized);
     }
+
     public GameObject RaycastFromCamera()
     {
         if (mainCamera == null)
@@ -49,7 +58,34 @@ public class CameraScript : MonoBehaviour
             return hit.collider.gameObject;
         }
 
-        // Debug.Log("No Object Hit");
         return null;
+    }
+
+    public void ZoomTo(bool isZoomIn)
+    {
+        float targetFOV = isZoomIn ? zoomInFOV : zoomOutFOV;
+
+        if (zoomCoroutine != null)
+        {
+            StopCoroutine(zoomCoroutine);
+        }
+
+        zoomCoroutine = StartCoroutine(SmoothZoom(targetFOV));
+    }
+
+    private IEnumerator SmoothZoom(float targetFOV)
+    {
+        float startFOV = mainCamera.fieldOfView;
+        float time = 0f;
+
+        while (Mathf.Abs(mainCamera.fieldOfView - targetFOV) > 0.01f)
+        {
+            time += Time.deltaTime * zoomSpeed;
+            mainCamera.fieldOfView = Mathf.Lerp(startFOV, targetFOV, time);
+            yield return null;
+        }
+
+        mainCamera.fieldOfView = targetFOV; // 정확하게 목표 FOV에 맞춰 고정
+        zoomCoroutine = null;
     }
 }

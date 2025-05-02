@@ -103,7 +103,7 @@ public class PoolingManager : MonoBehaviour
         {
             int activeObjects = currentCount - pool.Count;
 
-            if (activeObjects < 10)
+            if (activeObjects < 6)
             {
                 GameObject obj = null;
                 bool isNewlyCreated = false;

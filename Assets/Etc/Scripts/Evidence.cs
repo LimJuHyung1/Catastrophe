@@ -1,4 +1,7 @@
+using System.Reflection;
+using System.Collections;
 using UnityEngine;
+
 
 public class Evidence : MonoBehaviour
 {
@@ -25,8 +28,8 @@ public class Evidence : MonoBehaviour
     private bool isFound = false; // 증거 발견 여부
     public bool IsFound { get => isFound; set => isFound = value; }
 
-    private HernyHomeManager hernyHomeManager;
-    public HernyHomeManager HernyHomeManager { set => hernyHomeManager = value; }
+    private MonoBehaviour sceneManager;
+    public MonoBehaviour SceneManager { set => sceneManager = value; }
 
 
 
@@ -42,8 +45,29 @@ public class Evidence : MonoBehaviour
 
     public void FindEvidence()
     {
-        // HernyHomeManager의 FindEvidence 메서드 호출
-        isFound = true; // 증거 발견 상태로 변경
-        StartCoroutine(hernyHomeManager.FindEvidence(PlayerLine, this.playerAudioClip));
-    } 
+        if (sceneManager == null)
+        {
+            Debug.LogError("타겟 스크립트를 할당하세요.");
+            return;
+        }
+
+        // 메서드 찾기
+        MethodInfo method = sceneManager.GetType().GetMethod("FindEvidence", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
+        if (method != null)
+        {
+            isFound = true; // 증거 발견 상태로 변경
+            object result = method.Invoke(sceneManager, new object[] { PlayerLine, playerAudioClip });
+
+            // 코루틴일 경우 StartCoroutine 해야 함
+            if (result is IEnumerator coroutine)
+            {
+                StartCoroutine(coroutine);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("FindEvidence 메서드를 찾을 수 없습니다.");
+        }
+    }
 }

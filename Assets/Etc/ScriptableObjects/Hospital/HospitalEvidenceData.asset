@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d223df3de934a5a47909409b5bba0f2e, type: 3}
+  m_Name: HospitalEvidenceData
+  m_EditorClassIdentifier: 
+  evidenceDatas:
+  - koreanEvidenceName: "\uD5E8\uB9AC\uC758 \uCEF4\uD4E8\uD130\uC5D0 \uD45C\uC2DC\uB41C
+      \uC77C\uC815\uD45C"
+    englishEvidenceName: Schedule displayed on Henry's computer
+    description: 
+    icon: {fileID: 0}
+    playerAudioClip: {fileID: 8300000, guid: 72608b0c4333ec14d8ca54dc40281c81, type: 3}
+    playerLine: "5\uC6D4 3\uC77C, \uC70C\uB9AC\uC5C4\uACFC \uD68C\uC758... \uADF8\uB9AC\uACE0
+      5\uC6D4 4\uC77C, \uB808\uC2A4\uD1A0\uB791, 'E'\uB77C... \uB204\uAD6C\uC9C0?
+      \uD5E8\uB9AC\uAC00 \uB530\uB85C \uB9CC\uB098\uB824 \uD588\uB358 \uC0AC\uB78C\uC778\uAC00?"
+  - koreanEvidenceName: "\uC624\uB9AC\uC628 \uCE90\uD53C\uD0C8 \uD22C\uC790 \uB9AC\uC2A4\uD06C
+      \uAC80\uD1A0 \uD1B5\uBCF4\uC11C"
+    englishEvidenceName: Orion Capital Investment Risk Notice
+    description: 
+    icon: {fileID: 0}
+    playerAudioClip: {fileID: 8300000, guid: cd1e0b17b656fe642904e193644f943e, type: 3}
+    playerLine: "\uAC89\uC73C\uB85C\uB294 \uC758\uB8CC \uACFC\uC2E4\uC744 \uBB38\uC81C
+      \uC0BC\uC558\uC9C0\uB9CC... \uBB54\uAC00 \uC774\uC0C1\uD558\uB2E4. \uC70C\uB9AC\uC5C4\uC774
+      \uD5E8\uB9AC\uB97C \uC555\uBC15\uD558\uB824\uB358 \uB2E4\uB978 \uC774\uC720\uAC00
+      \uC788\uC5C8\uB358 \uAC78\uAE4C?"
+  - koreanEvidenceName: "\uC9C4\uB8CC\uC2E4 \uCE68\uB300\uC5D0\uC11C \uBC1C\uACAC\uB41C
+      \uAE08\uC0C9 \uBA38\uB9AC\uCE74\uB77D"
+    englishEvidenceName: Blonde hair on the examination bed
+    description: 
+    icon: {fileID: 0}
+    playerAudioClip: {fileID: 8300000, guid: 1a8a403126948a84395c58dbc4ab2f86, type: 3}
+    playerLine: "\uD5E8\uB9AC\uC758 \uBA38\uB9AC\uCE74\uB77D\uC740 \uC544\uB2D0\uD150\uB370...
+      \uD658\uC790\uC758 \uBA38\uB9AC\uCE74\uB77D\uC778\uAC00?"
+  - koreanEvidenceName: "\uD5E8\uB9AC\uC758 \uC77C\uAE30\uC7A5"
+    englishEvidenceName: Herny's Diary
+    description: 
+    icon: {fileID: 0}
+    playerAudioClip: {fileID: 8300000, guid: 753255ea88549f0468a5d4e290158389, type: 3}
+    playerLine: "\uC790\uAE30 \uD655\uC2E0\uC5D0 \uAC00\uB4DD \uCC28 \uC788\uC5C8\uAD70...
+      \uADF8\uB7EC\uB2C8 \uBB34\uB9AC\uD558\uAC8C \uC0AC\uC5C5\uC744 \uD655\uC7A5\uD588\uACA0\uC9C0."

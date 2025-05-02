@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HernyHomeEvidenceManager : MonoBehaviour
+public class EvidenceManager : MonoBehaviour
 {
     public Evidence[] evidences; // 증거 데이터 배열
-    public HernyHomeEvidenceData evidenceData;
-    public HernyHomeManager hernyHomeManager; // HernyHomeManager 참조
+    public EvidenceSO evidenceData;
+    public MonoBehaviour sceneManager; // HernyHomeManager 참조
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,7 +35,7 @@ public class HernyHomeEvidenceManager : MonoBehaviour
                 targetEvidence.Icon = tmpData.icon;
                 targetEvidence.PlayerAudioClip = tmpData.playerAudioClip;
                 targetEvidence.PlayerLine = tmpData.playerLine;
-                targetEvidence.HernyHomeManager = hernyHomeManager;
+                targetEvidence.SceneManager = sceneManager;
 
                 Debug.Log($"Evidence 초기화: {tmpData.koreanEvidenceName} ({tmpData.englishEvidenceName})");
             }

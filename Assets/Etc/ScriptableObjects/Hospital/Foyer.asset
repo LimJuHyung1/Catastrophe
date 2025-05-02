@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1055dd6230766be43bd0633be6407793, type: 3}
+  m_Name: Foyer
+  m_EditorClassIdentifier: 
+  dialogueLines:
+  - characterName: "\uAC04\uD638\uC0AC"
+    line: "\uC6D0\uC7A5\uB2D8 \uC544\uC9C1\uB3C4 \uC18C\uC2DD \uC5C6\uB300\u2026
+      \uC124\uB9C8 \uBB34\uC2A8 \uC77C\uC774\uB77C\uB3C4 \uC0DD\uAE34 \uAC74 \uC544\uB2C8\uACA0\uC9C0?"
+    audioClip: {fileID: 8300000, guid: 1891164e8cf716743928863ad90ce06b, type: 3}
+    nameColor: {r: 0.6666667, g: 0, b: 0.38431373, a: 1}
+  - characterName: "\uC758\uC0AC"
+    line: "\uAE00\uC384\u2026 \uC5F0\uB77D\uB3C4 \uC548 \uB418\uACE0, \uBCD1\uC6D0
+      \uC77C\uC815\uB3C4 \uC804\uBD80 \uBE44\uC6CC\uB1A8\uB2E4\uB358\uB370. \uC544\uBB34\uB798\uB3C4
+      \uC2EC\uC0C1\uCE58 \uC54A\uC544."
+    audioClip: {fileID: 8300000, guid: bba1166167910ff489820388a56c9fd6, type: 3}
+    nameColor: {r: 0, g: 0.5773585, b: 0.29552418, a: 1}
+  - characterName: "\uAC04\uD638\uC0AC"
+    line: "\uC694\uC998 \uC774\uC0C1\uD558\uAE34 \uD588\uC796\uC544. \uBCD1\uC6D0\uC77C\uBCF4\uB2E4
+      \uB534 \uB370 \uB354 \uC2E0\uACBD \uC4F0\uB294 \uB290\uB08C\uC774\uC5C8\uACE0\u2026"
+    audioClip: {fileID: 8300000, guid: b308275b222353c4793ac45e04880703, type: 3}
+    nameColor: {r: 0.6666667, g: 0, b: 0.38431373, a: 1}
+  - characterName: "\uC758\uC0AC"
+    line: "\uBC16\uC5D0\uC11C \uC790\uC8FC \uB9CC\uB098\uB294 \uC0AC\uB78C\uC774
+      \uC788\uB2E4\uB294 \uC598\uAE30\uB3C4 \uB4E4\uC5C8\uC5B4. \uBCD1\uC6D0\uC774\uB791\uC740
+      \uC544\uBB34 \uAD00\uB828\uB3C4 \uC5C6\uB294 \uC5EC\uC790\uB77C\uB358\uB370?"
+    audioClip: {fileID: 8300000, guid: 8db73c7d27dc46b45a308f5cb5b175a0, type: 3}
+    nameColor: {r: 0, g: 0.5803922, b: 0.29803923, a: 1}
+  - characterName: "\uAC04\uD638\uC0AC"
+    line: "\uC751, \uB098\uB3C4 \uB4E4\uC5C8\uC5B4. \uC9C1\uC6D0\uB3C4 \uC544\uB2C8\uACE0
+      \uD658\uC790\uB3C4 \uC544\uB2CC\uB370\u2026 \uC694\uC998 \uBD80\uCA4D \uC790\uC8FC
+      \uBCF4\uC778\uB2E4\uB354\uB77C."
+    audioClip: {fileID: 8300000, guid: 82300a3d0eb5ad844a2c8555a3b132ab, type: 3}
+    nameColor: {r: 0.6666667, g: 0, b: 0.38431373, a: 1}
+  - characterName: "\uC758\uC0AC"
+    line: "\uADF8 \uC598\uAE34 \uAD1C\uD788 \uAEBC\uB0C8\uB2E4\uAC00 \uBB38\uC81C
+      \uC0DD\uAE34 \uC0AC\uB78C\uB3C4 \uC788\uB2E4\uB358\uB370\u2026 \uADF8\uB0E5
+      \uC870\uC6A9\uD788 \uC788\uB294 \uAC8C \uB098\uC544."
+    audioClip: {fileID: 8300000, guid: 76f4761f5b1eee047b9ad7ed253b31ab, type: 3}
+    nameColor: {r: 0, g: 0.5803922, b: 0.29803923, a: 1}
+  - characterName: "\uAC04\uD638\uC0AC"
+    line: "\uADF8\uB9AC\uACE0\u2026 \uC694\uC998 \uBCD1\uC6D0 \uADFC\uCC98\uC5D0
+      \uC218\uC0C1\uD55C \uB0A8\uC790\uB3C4 \uC790\uC8FC \uBCF4\uC778\uB2E4\uB358\uB370."
+    audioClip: {fileID: 8300000, guid: 8207bb31d20625c45b88d930425893e9, type: 3}
+    nameColor: {r: 0.6666667, g: 0, b: 0.38431373, a: 1}
+  - characterName: "\uC758\uC0AC"
+    line: "\uC751, \uC2F8\uC6C0 \uC880 \uD588\uB2E4\uB294 \uC0AC\uB78C. \uBD84\uC704\uAE30
+      \uC2EC\uC0C1\uCC2E\uB354\uB77C."
+    audioClip: {fileID: 8300000, guid: 591cac4f4976818408be1f4a2832aef0, type: 3}
+    nameColor: {r: 0, g: 0.5803922, b: 0.29803923, a: 1}
+  - characterName: "\uAC04\uD638\uC0AC"
+    line: "\uAD1C\uD788 \uC5EE\uC774\uC9C0 \uB9D0\uC790. \uB208 \uB9C8\uC8FC\uCE58\uB294
+      \uAC83\uB3C4 \uAEBC\uB9BC\uCE59\uD574."
+    audioClip: {fileID: 8300000, guid: 9ff5d3976ef10af45ac3dc1984c82cd8, type: 3}
+    nameColor: {r: 0.6666667, g: 0, b: 0.38431373, a: 1}
+  - characterName: "\uC758\uC0AC"
+    line: "\uB9DE\uC544. \uADF8\uB0E5 \uBAA8\uB978 \uCC99\uD558\uB294 \uAC8C \uC81C\uC77C\uC774\uC57C."
+    audioClip: {fileID: 8300000, guid: 7c6ee8003f59d404bb12e1df5e23a631, type: 3}
+    nameColor: {r: 0, g: 0.5803922, b: 0.29803923, a: 1}
+  - characterName: "\uC218\uC794"
+    line: "(\uB204\uAD6C\uB97C \uB9D0\uD558\uB294 \uAC70\uC9C0?)"
+    audioClip: {fileID: 8300000, guid: 829834e24b3a44042afd14d6a139f955, type: 3}
+    nameColor: {r: 0.627451, g: 0, b: 0, a: 1}
+  - characterName: "\uC218\uC794"
+    line: "(\uC880 \uB354 \uC870\uC0AC\uB97C \uD574\uBD10\uC57C\uACA0\uC5B4)"
+    audioClip: {fileID: 8300000, guid: a3b51d8eb27f93b498aabe4bc5ea5716, type: 3}
+    nameColor: {r: 0.627451, g: 0, b: 0, a: 1}
