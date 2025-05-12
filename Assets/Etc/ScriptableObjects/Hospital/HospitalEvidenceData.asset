@@ -47,3 +47,61 @@ MonoBehaviour:
     playerAudioClip: {fileID: 8300000, guid: 753255ea88549f0468a5d4e290158389, type: 3}
     playerLine: "\uC790\uAE30 \uD655\uC2E0\uC5D0 \uAC00\uB4DD \uCC28 \uC788\uC5C8\uAD70...
       \uADF8\uB7EC\uB2C8 \uBB34\uB9AC\uD558\uAC8C \uC0AC\uC5C5\uC744 \uD655\uC7A5\uD588\uACA0\uC9C0."
+  - koreanEvidenceName: "2\uC6D4 \uB300\uADDC\uBAA8 \uC778\uC0AC \uAE30\uB85D"
+    englishEvidenceName: February Staff Turnover Report
+    description: 
+    icon: {fileID: 0}
+    playerAudioClip: {fileID: 8300000, guid: f3a6d8963d90974428f23b1f56581aa3, type: 3}
+    playerLine: "\uAD00\uB828 \uBD80\uC11C \uC9C1\uC6D0\uB4E4\uC744 \uD55C \uBC88\uC5D0
+      \uB0B4\uBCF4\uB0C8\uB2E4\uACE0\u2026 \uC758\uB8CC \uC0AC\uACE0\uB294 \uC2E4\uC81C\uB85C
+      \uC788\uC5C8\uC5B4. \uD5E8\uB9AC\uB294 \uADF8\uAC78 \uB36E\uAE30 \uC704\uD574
+      \uC0AC\uB78C\uB4E4\uC744 \uC870\uC6A9\uD788 \uC815\uB9AC\uD55C \uAC70\uC57C."
+  - koreanEvidenceName: "4\uC6D4 \uBE44\uD488 \uC9C0\uCD9C \uB0B4\uC5ED\uC11C"
+    englishEvidenceName: April Supply Expenditure Log
+    description: 
+    icon: {fileID: 0}
+    playerAudioClip: {fileID: 8300000, guid: 73332de088886dd44aca18c1bd9f027e, type: 3}
+    playerLine: "\uC774\uBC88 \uB2EC \uBE44\uD488 \uC9C0\uCD9C\uC774 \uB2E4\uB978
+      \uB2EC\uBCF4\uB2E4 \uD6E8\uC52C \uB9CE\uC544\u2026 \uBCD1\uC6D0\uC5D0\uC11C
+      \uC4F8 \uBB3C\uAC74\uC73C\uB85C\uB294 \uC548 \uBCF4\uC5EC. \uB204\uAD70\uAC00\uC5D0\uAC8C
+      \uC8FC\uAE30 \uC704\uD574 \uC0C0\uB2E4\uACE0 \uBD10\uC57C\uACA0\uC9C0."
+  - koreanEvidenceName: "\uC0C1\uBC18\uAE30 \uBCD1\uC6D0 \uC7AC\uBB34 \uC694\uC57D
+      \uBCF4\uACE0\uC11C"
+    englishEvidenceName: H1 Financial Summary Report
+    description: 
+    icon: {fileID: 0}
+    playerAudioClip: {fileID: 8300000, guid: 839fe86da2ceaf64f9e6a35b910c7087, type: 3}
+    playerLine: "1\uC6D4 \uC774\uD6C4 \uC218\uC775\uC774 \uC904\uC5B4\uB4E4\uACE0
+      \uC788\uB294\uB370 \uC70C\uB9AC\uC5C4\uC774 \uD22C\uC790\uB97C \uD588\uB124.
+      \uD5E8\uB9AC\uAC00 \uC774 \uD22C\uC790\uB97C \uBC1B\uC9C0 \uC54A\uC558\uB2E4\uBA74\u2026
+      \uBCD1\uC6D0\uC740 \uC774\uBBF8 \uBB34\uB108\uC84C\uC744\uC9C0\uB3C4 \uBAB0\uB77C."
+  - koreanEvidenceName: "\uC9C4\uB8CC \uAE30\uB85D \uD30C\uC77C"
+    englishEvidenceName: Medical Record File
+    description: 
+    icon: {fileID: 0}
+    playerAudioClip: {fileID: 8300000, guid: b4000d4f8df1f134a86f40a443633f82, type: 3}
+    playerLine: "\uC218\uC220 \uACFC\uC815\uC774 \uBE60\uC9C4 \uAD6C\uAC04\uC774
+      \uC788\uB124\u2026 \uB530\uB85C \uC870\uC0AC\uD574\uBCFC \uD544\uC694\uAC00
+      \uC788\uACA0\uC5B4."
+  - koreanEvidenceName: "\uACE0\uC218\uC775 \uC0C1\uD488 \uAE30\uD68D\uC548"
+    englishEvidenceName: High-Margin Product Strategy Draft
+    description: 
+    icon: {fileID: 0}
+    playerAudioClip: {fileID: 8300000, guid: db3c1b0ccceebc1479fa448229228b73, type: 3}
+    playerLine: "\uC774 \uC815\uB3C4\uBA74 \uACBD\uC601\uC774 \uC544\uB2C8\uB77C
+      \uC0AC\uAE30\uC9C0\u2026"
+  - koreanEvidenceName: "\uBE44\uACF5\uAC1C \uC784\uC0C1 \uD611\uC57D\uC11C"
+    englishEvidenceName: Confidential Clinical Trial Agreement
+    description: 
+    icon: {fileID: 0}
+    playerAudioClip: {fileID: 8300000, guid: 7ac19eeb850b0134f92887c147cdf2a5, type: 3}
+    playerLine: "\uAD81\uC9C0\uC5D0 \uBAB0\uB9AC\uB2C8\uAE4C \uBC29\uBC95\uC744 \uAC00\uB9AC\uC9C0
+      \uC54A\uB294\uAD70."
+  - koreanEvidenceName: "\uBBF8\uACF5\uAC1C \uC784\uC0C1 \uACB0\uACFC \uBCF4\uACE0\uC11C"
+    englishEvidenceName: Unreleased Clinical Trial Report
+    description: 
+    icon: {fileID: 0}
+    playerAudioClip: {fileID: 8300000, guid: 54e5fa71439911b42abe0a85cfd080d0, type: 3}
+    playerLine: "\uBD80\uC791\uC6A9\uB960\uC774 \uC774 \uC815\uB3C4\uC778\uB370\u2026
+      \uC5B4\uC9F8\uC11C \uC5B8\uB860\uC5D4 \uB2E8 \uD55C \uC904\uB3C4 \uBCF4\uB3C4\uB418\uC9C0
+      \uC54A\uC740 \uAC70\uC9C0?"

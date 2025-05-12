@@ -52,7 +52,7 @@ public class HernyHomeManager : MonoBehaviour
     {
         player.IsTalking = true; // 대화 시작 시 플레이어 대화 상태 설정
         dialogue.SetActive(true);
-        sophia.TurnTowardPlayer(player.transform); // NPC가 플레이어를 바라보도록 설정
+        StartCoroutine(sophia.TurnTowardPlayer(player.transform)); // NPC가 플레이어를 바라보도록 설정
         StartCoroutine(FadeUtility.Instance.FadeOut(screen, 2f));        
         player.LookAtPosition(sophia.transform.GetChild(0).transform); // 플레이어가 NPC를 바라보도록 설정
 

@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class HingedDoor : DoorBase
 {
-    public float openAngle = -120;
-    public float openSpeed = 80f;
+    private float openAngle = -120;
+    private float openSpeed = 80f;
 
     protected override void Awake()
     {

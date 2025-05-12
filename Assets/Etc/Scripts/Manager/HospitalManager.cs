@@ -6,16 +6,24 @@ using UnityEditor;
 
 public class HospitalManager : MonoBehaviour
 {    
-    public DialogueScript dialogueScript;
+    public DialogueScript nurseDialogue;
     public DialogueScript soliloquy;
     public DialogueScript foyerDialogue;
+    public DialogueScript hernyOfficeDialogue;
+    public DialogueScript administrativeOfficeDialogue;
 
     public GameObject dialogue;
+    public GameObject investigationUI;
     public Transform startPosition;
-    public Transform specialDoor;
+    public Transform foyerLookTarget;
+    public Transform hernyOfficePos;
+    public Transform hernyOfficeLookTarget;
+    public Transform administrativeOfficePos;
 
     public Nurse nurse;
     public Player player;
+    public AdministrativeOfficer administrativeOfficer;
+    public NPCRole administrativeOfficer2;
 
     public Image[] slides;
     public Image screen;
@@ -49,13 +57,20 @@ public class HospitalManager : MonoBehaviour
         // StartCoroutine(PlaySoliloquy());        
     }
 
+    private void InitDialogueUI(bool isTalking)
+    {
+        player.IsTalking = isTalking; // 대화 시작 시 플레이어 대화 상태 설정
+        npcName.text = "";
+        line.text = "";
+    }
+
     private IEnumerator PlaySoliloquy()
     {
-        player.IsTalking = true; // 대화 시작 시 플레이어 대화 상태 설정
-        StartCoroutine(FadeUtility.Instance.FadeOut(screen, 2f));
-        yield return new WaitForSeconds(2f);
-                      
+        InitDialogueUI(true);
+        yield return StartCoroutine(FadeUtility.Instance.FadeOut(screen, 2f));
+
         Slide(true);
+        yield return new WaitForSeconds(2f);
 
         foreach (DialogueLine line in soliloquy.dialogueLines)
         {
@@ -78,28 +93,28 @@ public class HospitalManager : MonoBehaviour
 
         Slide(false);
 
-        player.IsTalking = false; // 대화 종료 시 플레이어 대화 상태 설정        
+        InitDialogueUI(false);
     }
 
     public void StartCoroutinePlayDialogue()
     {
-        StartCoroutine(PlayDialogueAudioClips());
+        StartCoroutine(PlayNurseDialogue());
     }
 
-    private IEnumerator PlayDialogueAudioClips()
+    private IEnumerator PlayNurseDialogue()
     {
-        player.IsTalking = true; // 대화 시작 시 플레이어 대화 상태 설정        
-        nurse.TurnTowardPlayer(player.transform); // NPC가 플레이어를 바라보도록 설정
-        StartCoroutine(FadeUtility.Instance.FadeOut(screen, 2f));
+        InitDialogueUI(true);
+
+        StartCoroutine(nurse.TurnTowardPlayer(player.transform)); // NPC가 플레이어를 바라보도록 설정                
+        
         player.LookAtPosition(nurse.transform.GetChild(0).transform); // 플레이어가 NPC를 바라보도록 설정
         player.ZoomIn(); // 플레이어 줌 인
-
-        yield return new WaitForSeconds(1f); // NPC가 플레이어를 바라보는 시간
-
         dialogue.SetActive(true);
         Slide(true);
+        yield return new WaitForSeconds(2f);
 
-        foreach (DialogueLine line in dialogueScript.dialogueLines)
+        int animationIndex = 0;
+        foreach (DialogueLine line in nurseDialogue.dialogueLines)
         {
             if (line.audioClip != null)
             {
@@ -110,7 +125,10 @@ public class HospitalManager : MonoBehaviour
                 npcName.text = line.characterName;
 
                 if (npcName.text == "간호사")
-                    nurse.StartTalking();
+                {
+                    nurse.PlayAnimation(animationIndex % 5 + 1);
+                    animationIndex++;                    
+                }
                 else nurse.StopTalking();
 
                 // 대사를 한 글자씩 출력
@@ -127,8 +145,8 @@ public class HospitalManager : MonoBehaviour
         yield return FadeUtility.Instance.FadeIn(screen, 2f); // 대화가 끝나면 화면 페이드 인        
         player.ZoomOut(); // 플레이어 줌 인
         yield return FadeUtility.Instance.FadeOut(screen, 2f); // 대화가 끝나면 화면 페이드 인        
-        
-        player.IsTalking = false; // 대화 종료 시 플레이어 대화 상태 설정        
+
+        InitDialogueUI(false);
     }
 
     public void StartFoyerDialogue()
@@ -138,12 +156,11 @@ public class HospitalManager : MonoBehaviour
 
     private IEnumerator PlayFoyerDialogue()
     {
-        player.IsTalking = true; // 대화 시작 시 플레이어 대화 상태 설정
-        player.LookAtPosition(specialDoor); 
-        StartCoroutine(FadeUtility.Instance.FadeOut(screen, 2f));
-        yield return new WaitForSeconds(2f);
+        InitDialogueUI(true);
+        player.LookAtPosition(foyerLookTarget);
 
         Slide(true);
+        yield return new WaitForSeconds(2f);
 
         foreach (DialogueLine line in foyerDialogue.dialogueLines)
         {
@@ -166,9 +183,108 @@ public class HospitalManager : MonoBehaviour
 
         Slide(false);
 
-        player.IsTalking = false; // 대화 종료 시 플레이어 대화 상태 설정        
-
+        InitDialogueUI(false);
     }
+
+    public void StartHernyOfficeDialogue()
+    {
+        StartCoroutine(PlayHernyOfficeDialogue());
+    }
+
+    private IEnumerator PlayHernyOfficeDialogue()
+    {
+        InitDialogueUI(true);
+
+        yield return StartCoroutine(FadeUtility.Instance.FadeIn(screen, 2f));
+        player.transform.position = hernyOfficePos.transform.position;
+        yield return StartCoroutine(FadeUtility.Instance.FadeOut(screen, 2f));
+
+        player.LookAtPosition(hernyOfficeLookTarget);
+
+        Slide(true);
+        yield return new WaitForSeconds(2f);
+
+        foreach (DialogueLine line in hernyOfficeDialogue.dialogueLines)
+        {
+            if (line.audioClip != null)
+            {
+                npcName.color = line.nameColor;
+                npcName.text = line.characterName;
+
+                audioSource.clip = line.audioClip;
+                audioSource.Play();
+
+                // 대사를 한 글자씩 출력
+                yield return StartCoroutine(TypeLine(line.line));
+
+                // 대사가 다 나온 후 오디오 종료까지 대기
+                float remainingTime = line.audioClip.length - line.line.Length * typeSpeed;
+                yield return new WaitForSeconds(Mathf.Max(0f, remainingTime + 0.5f));
+            }
+        }
+
+        Slide(false);
+
+        InitDialogueUI(false);
+    }
+
+    public void StartAdministrativeOfficeDialogue()
+    {
+        StartCoroutine(PlayAdministrativeOfficeDialogue());
+    }
+
+    private IEnumerator PlayAdministrativeOfficeDialogue()
+    {
+        InitDialogueUI(true);
+        player.LookAtPosition(administrativeOfficer.LookTarget);
+
+        yield return StartCoroutine(FadeUtility.Instance.FadeIn(screen, 2f));        
+        player.transform.position = administrativeOfficePos.transform.position;
+        yield return StartCoroutine(FadeUtility.Instance.FadeOut(screen, 2f));
+        
+        Slide(true);
+
+        StartCoroutine(administrativeOfficer.TurnTowardPlayer(player.transform)); // NPC가 플레이어를 바라보도록 설정
+        StartCoroutine(administrativeOfficer2.TurnTowardPlayer(player.transform));
+        yield return new WaitForSeconds(2f);
+
+        int animationIndex = 0;
+        foreach (DialogueLine line in administrativeOfficeDialogue.dialogueLines)
+        {            
+            if (line.audioClip != null)
+            {
+                npcName.color = line.nameColor;
+                npcName.text = line.characterName;
+
+                if (line.characterName == "행정실 직원")
+                {
+                    administrativeOfficer.PlayAnimation(animationIndex % 3);
+                    animationIndex++;
+                }                    
+
+                audioSource.clip = line.audioClip;
+                audioSource.Play();
+
+                // 대사를 한 글자씩 출력
+                yield return StartCoroutine(TypeLine(line.line));
+
+                // 대사가 다 나온 후 오디오 종료까지 대기
+                float remainingTime = line.audioClip.length - line.line.Length * typeSpeed;
+                yield return new WaitForSeconds(Mathf.Max(0f, remainingTime + 0.5f));
+            }
+        }
+
+        yield return StartCoroutine(FadeUtility.Instance.FadeIn(screen, 2f));
+        Slide(false);
+        administrativeOfficer.gameObject.SetActive(false);
+        administrativeOfficer2.gameObject.SetActive(false);
+        yield return StartCoroutine(FadeUtility.Instance.FadeOut(screen, 2f));
+
+        InitDialogueUI(false);
+    }
+
+
+
 
 
 
@@ -184,11 +300,19 @@ public class HospitalManager : MonoBehaviour
         }
     }
 
-    public IEnumerator FindEvidence(string playerLine, AudioClip playerAudioClip)
+    public IEnumerator FindEvidence(string playerLine, AudioClip playerAudioClip, string tagName)
     {
+        if(tagName == "Computer")
+        {
+            yield return StartCoroutine(InvastigationCoroutine());
+        }
+
         npcName.text = "수잔";
-        
+        npcName.color = new Color32(0xA0, 0x00, 0x00, 0xFF); // 0xA00000 + 완전 불투명
+        line.text = "";
+
         Slide(true, 0.3f);
+        yield return new WaitForSeconds(1f);
 
         Debug.LogWarning(playerLine);
         StartCoroutine(TypeLine(playerLine));
@@ -226,6 +350,7 @@ public class HospitalManager : MonoBehaviour
             StartCoroutine(FadeUtility.Instance.FadeOut(line, duration));
         }
     }
+
     private void SlideMove(int index, bool isOn, float fadeDuration)
     {
         if (index < 0 || index >= slides.Length)
@@ -254,5 +379,42 @@ public class HospitalManager : MonoBehaviour
 
         rect.anchoredPosition = endPos;        
     }
+
+
+
+    public IEnumerator InvastigationCoroutine()
+    {
+        Image screen = investigationUI.transform.GetChild(0).GetComponent<Image>();
+        Text investigationText = screen.transform.GetChild(0).GetComponent<Text>();
+        investigationText.text = "";
+
+        investigationUI.gameObject.SetActive(true);
+
+        yield return StartCoroutine(FadeUtility.Instance.FadeIn(screen, 1f));
+
+        yield return StartCoroutine(LoopDots(investigationText));
+        // StartCoroutine(FadeUtility.Instance.FadeOut(investigationText, 1f));
+
+        yield return StartCoroutine(FadeUtility.Instance.FadeOut(screen, 1f));
+
+        investigationUI.gameObject.SetActive(false);
+    }
+
+    private IEnumerator LoopDots(Text investigationText)
+    {
+        string baseText = "조사 중";
+        int dotCount = 0;
+        float interval = 0.5f;
+
+        investigationText.text = baseText;
+
+        while (dotCount < 3)
+        {
+            dotCount = (dotCount + 1);
+            investigationText.text = baseText + new string('.', dotCount);
+            yield return new WaitForSeconds(interval);
+        }
+    }
+
 }
 

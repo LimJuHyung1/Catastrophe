@@ -2,6 +2,7 @@ using OpenAI;
 using UnityEngine;
 using System.Collections.Generic;
 using AdvancedPeopleSystem;
+using System.Collections;
 
 
 public class NPCRole : NPC
@@ -16,6 +17,13 @@ public class NPCRole : NPC
         Emma,       // 여자B
         Police,     // 경찰
         Nason
+    }
+
+    protected bool isReadyToTalk = true;
+    public bool IsReadyToTalk
+    {
+        get { return isReadyToTalk; }
+        set { isReadyToTalk = value; }
     }
 
     protected List<ChatMessage> chatMessages;
@@ -85,20 +93,22 @@ public class NPCRole : NPC
 
 
 
-
-
-    /// <summary>
-    /// 플레이어 방향으로 rotate
-    /// </summary>
-    public void TurnTowardPlayer(Transform playerTrans)
+    public IEnumerator TurnTowardPlayer(Transform target, float duration = 1f)
     {
-        // 현재 오브젝트의 위치
-        Vector3 targetPosition = playerTrans.position;
+        float elapsed = 0f;
+        Quaternion startRotation = transform.rotation;
 
-        // 현재 오브젝트의 y 위치는 변경하지 않음
-        targetPosition.y = transform.position.y;
+        Vector3 lookPos = target.position;
+        lookPos.y = transform.position.y;
+        Quaternion targetRotation = Quaternion.LookRotation(lookPos - transform.position);
 
-        // 타겟 위치를 바라보도록 회전
-        transform.LookAt(targetPosition);
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            transform.rotation = Quaternion.Slerp(startRotation, targetRotation, elapsed / duration);
+            yield return null;
+        }
+
+        transform.rotation = targetRotation; // 정확히 맞추기
     }
 }

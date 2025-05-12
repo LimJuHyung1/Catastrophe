@@ -57,7 +57,7 @@ public class Evidence : MonoBehaviour
         if (method != null)
         {
             isFound = true; // 증거 발견 상태로 변경
-            object result = method.Invoke(sceneManager, new object[] { PlayerLine, playerAudioClip });
+            object result = method.Invoke(sceneManager, new object[] { PlayerLine, playerAudioClip, gameObject.tag });
 
             // 코루틴일 경우 StartCoroutine 해야 함
             if (result is IEnumerator coroutine)

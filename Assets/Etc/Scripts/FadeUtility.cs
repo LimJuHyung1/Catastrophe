@@ -123,7 +123,7 @@ public class FadeUtility : MonoBehaviour
         yield return FadeIn(screen, 1f);
 
         yield return new WaitForSeconds(1f);
-        npcRole.TurnTowardPlayer(player.transform);
+        StartCoroutine(npcRole.TurnTowardPlayer(player.transform));
         player.TurnTowardNPC(npcRole.transform);
         player.ReadyConversation();
 

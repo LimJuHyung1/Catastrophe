@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class SpecialDoor : DoorBase
 {
+    [SerializeField] private float openAngle = 120;
+    private float openSpeed = 80f;
+
     public HospitalManager hospitalManager;
     protected override void Awake()
     {
@@ -14,18 +17,34 @@ public class SpecialDoor : DoorBase
         if (isOpened) return;
         isOpened = true;
 
-        hospitalManager.StartFoyerDialogue();
+
+        switch (gameObject.tag)
+        {
+            case "Foyer":
+                hospitalManager.StartFoyerDialogue();
+                break;
+            case "Herny's Office":
+                StartCoroutine(OpenCoroutine());
+                hospitalManager.StartHernyOfficeDialogue();
+                break;
+            case "Administrative Office":
+                StartCoroutine(OpenCoroutine());
+                hospitalManager.StartAdministrativeOfficeDialogue();
+                break;
+
+        }
+
         boxCollider.enabled = false; // Disable the trigger collider after opening the door
     }
 
 
     protected override IEnumerator OpenCoroutine()
     {
-        float targetAngle = transform.eulerAngles.y;
+        float targetAngle = transform.eulerAngles.y + openAngle;
 
         while (Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.y, targetAngle)) > 0.1f)
         {
-            float newYRotation = Mathf.MoveTowardsAngle(transform.eulerAngles.y, targetAngle, Time.deltaTime);
+            float newYRotation = Mathf.MoveTowardsAngle(transform.eulerAngles.y, targetAngle, openSpeed * Time.deltaTime);
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, newYRotation, transform.eulerAngles.z);
             yield return null;
         }
@@ -34,5 +53,4 @@ public class SpecialDoor : DoorBase
         finalRotation.y = targetAngle;
         transform.eulerAngles = finalRotation;
     }
-
 }

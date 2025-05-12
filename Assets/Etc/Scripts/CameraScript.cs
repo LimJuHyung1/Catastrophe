@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 
 public class CameraScript : MonoBehaviour
@@ -8,9 +9,9 @@ public class CameraScript : MonoBehaviour
     private LayerMask targetLayers;
     private Camera mainCamera;
 
-    [SerializeField] private float zoomInFOV = 30f;   // 줌 인 할 때 목표 FOV
-    [SerializeField] private float zoomOutFOV = 60f;  // 줌 아웃 할 때 목표 FOV
-    [SerializeField] private float zoomSpeed = 5f;    // 줌 속도
+    private float zoomInFOV = 40f;   // 줌 인 할 때 목표 FOV
+    private float zoomOutFOV = 60f;  // 줌 아웃 할 때 목표 FOV
+    private float zoomSpeed = 5f;    // 줌 속도
     private Coroutine zoomCoroutine;                 // 현재 실행 중인 코루틴 저장용
 
     void Awake()
@@ -47,15 +48,25 @@ public class CameraScript : MonoBehaviour
 
         Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
         Ray ray = mainCamera.ScreenPointToRay(screenCenter);
-        RaycastHit hit;
 
-        Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.red, 3f);
+        RaycastHit[] hits = Physics.RaycastAll(ray, rayDistance, ~0, QueryTriggerInteraction.Ignore); // 모든 레이어 감지
+        Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
-        // 여러 개의 레이어 감지 가능
-        if (Physics.Raycast(ray, out hit, rayDistance, targetLayers, QueryTriggerInteraction.Collide))
+        foreach (var hit in hits)
         {
-            Debug.Log($"Hit Object: {hit.collider.gameObject.name}, Layer: {LayerMask.LayerToName(hit.collider.gameObject.layer)}");
-            return hit.collider.gameObject;
+            GameObject hitObj = hit.collider.gameObject;
+            int layer = hitObj.layer;
+
+            if (((1 << layer) & targetLayers) != 0)
+            {
+                // 타겟 오브젝트면 반환
+                return hitObj;
+            }
+            else
+            {
+                // 타겟이 아니고 막고 있는 오브젝트 → 가려졌다고 판단
+                break;
+            }
         }
 
         return null;

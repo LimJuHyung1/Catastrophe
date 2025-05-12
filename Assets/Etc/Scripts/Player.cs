@@ -6,7 +6,8 @@ using AdvancedPeopleSystem;
 public class Player : MonoBehaviour
 {
     public ConversationManager conversationManager;
-    public GameObject clickMark;
+    public GameObject findEvidenceMark;
+    public GameObject talkToNPCMark;
     public GameObject FMark;
 
     [SerializeField] private bool isTalking = false; // 대화 중인지 여부
@@ -21,6 +22,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float moveSpeed = 3.5f;  // 이동 속도
     [SerializeField] private float lookSensitivity = 0.15f; // 마우스 감도
     private float velocityY = 0f; // Y축 속도 (점프 & 중력)
+    private float gravity = -9.81f;
 
     private float footstepTimer = 0f; // 발소리 타이머
     private float footstepDelay = 0.65f; // 발소리 간격 (초 단위)
@@ -65,11 +67,16 @@ public class Player : MonoBehaviour
             {
                 if (cam.RaycastFromCamera().layer == LayerMask.NameToLayer("Evidence")
                     && !cam.RaycastFromCamera().GetComponent<Evidence>().IsFound)
-                    clickMark.gameObject.SetActive(true);
+                    findEvidenceMark.gameObject.SetActive(true);
+
+                else if (cam.RaycastFromCamera().layer == LayerMask.NameToLayer("NPC")
+                    && cam.RaycastFromCamera().GetComponent<NPCRole>().IsReadyToTalk)
+                    talkToNPCMark.gameObject.SetActive(true);
+
                 else if (cam.RaycastFromCamera().layer == LayerMask.NameToLayer("Door")
                     && !cam.RaycastFromCamera().GetComponent<DoorBase>().GetIsOpened())
                 {
-                    FMark.gameObject.SetActive(true);                    
+                    FMark.gameObject.SetActive(true);
                 }                    
 
                 // 마우스 왼쪽 버튼 클릭 시 Raycast 실행
@@ -78,14 +85,23 @@ public class Player : MonoBehaviour
                     int tmpLayer = cam.RaycastFromCamera().layer;
                     if (tmpLayer == LayerMask.NameToLayer("NPC"))
                     {
-                        if (cam.RaycastFromCamera().CompareTag("Nurse"))
+                        NPCRole npc = cam.RaycastFromCamera().GetComponent<NPCRole>();
+
+                        if (npc.CompareTag("Nurse")
+                            && npc.GetComponent<Nurse>().IsReadyToTalk)
                         {
-                            cam.RaycastFromCamera().GetComponent<Nurse>().hospitalManager.StartCoroutinePlayDialogue();
+                            Nurse nurse = cam.RaycastFromCamera().GetComponent<Nurse>();
+                            nurse.hospitalManager.StartCoroutinePlayDialogue();                            
+                            nurse.IsReadyToTalk = false;
+
+                            talkToNPCMark.gameObject.SetActive(false);
                         }
                         else
                         {
-                            conversationManager.GetNPCRole(cam.RaycastFromCamera().GetComponent<NPCRole>());
+                            conversationManager.GetNPCRole(npc);
                             conversationManager.StartConversation();
+
+                            talkToNPCMark.gameObject.SetActive(false);
                         }                                                
                     }
                     // 증거 레이어이고 증거가 발견되지 않은 경우
@@ -93,7 +109,7 @@ public class Player : MonoBehaviour
                         && !cam.RaycastFromCamera().GetComponent<Evidence>().IsFound)
                     {
                         isTalking = true; // 독백 시작
-                        clickMark.gameObject.SetActive(false);
+                        findEvidenceMark.gameObject.SetActive(false);
                         cam.RaycastFromCamera().GetComponent<Evidence>().FindEvidence();
                     }
                 }
@@ -130,12 +146,17 @@ public class Player : MonoBehaviour
         // 중력 적용
         if (controller.isGrounded && velocityY < 0)
         {
-            velocityY = -2f; // 바닥에서 리셋
+            velocityY = -2f; // 바닥에 있을 땐 작게 고정
+        }
+        else
+        {
+            velocityY += gravity * Time.deltaTime; // 중력 계속 누적
         }
 
         // 이동 벡터 생성
-        Vector3 velocity = moveDirection * moveSpeed + Vector3.up * velocityY;
-        animator.SetBool("IsWalking", velocity.magnitude > 0.01f);
+        Vector3 velocity = moveDirection * moveSpeed + Vector3.up * velocityY;        
+        animator.SetBool("IsWalking", moveDirection.sqrMagnitude > 0.01f && controller.isGrounded);
+
 
         // 발소리 재생 처리 (일정 시간 간격 유지)
         if (moveDirection.sqrMagnitude > 0.01f && controller.isGrounded) // 이동 중 + 땅에 있을 때만
@@ -243,7 +264,8 @@ public class Player : MonoBehaviour
 
     private void SetActiveMark(bool state)
     {
-        clickMark.SetActive(state);
+        findEvidenceMark.SetActive(state);
+        talkToNPCMark.SetActive(state);
         FMark.SetActive(state);
     }
 }

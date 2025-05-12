@@ -19,6 +19,13 @@ public class Nurse : NPCRole
         lookTarget = transform.GetChild(0).transform;
     }
 
+    public void PlayAnimation(int state)
+    {
+        string trigger = state.ToString();
+        animator.SetTrigger(trigger);
+        StartTalking();
+    }
+
 
 
 

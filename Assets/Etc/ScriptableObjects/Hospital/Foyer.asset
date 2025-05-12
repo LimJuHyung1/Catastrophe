@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueLines:
   - characterName: "\uAC04\uD638\uC0AC"
-    line: "\uC6D0\uC7A5\uB2D8 \uC544\uC9C1\uB3C4 \uC18C\uC2DD \uC5C6\uB300\u2026
-      \uC124\uB9C8 \uBB34\uC2A8 \uC77C\uC774\uB77C\uB3C4 \uC0DD\uAE34 \uAC74 \uC544\uB2C8\uACA0\uC9C0?"
+    line: "\uC6D0\uC7A5\uB2D8\uC774 \uC2E4\uC885\uB410\uB2E4\uB294\uB370\u2026 \uB3C4\uB300\uCCB4
+      \uC5B4\uB5BB\uAC8C \uB41C \uC77C\uC77C\uAE4C?"
     audioClip: {fileID: 8300000, guid: 1891164e8cf716743928863ad90ce06b, type: 3}
     nameColor: {r: 0.6666667, g: 0, b: 0.38431373, a: 1}
   - characterName: "\uC758\uC0AC"
-    line: "\uAE00\uC384\u2026 \uC5F0\uB77D\uB3C4 \uC548 \uB418\uACE0, \uBCD1\uC6D0
-      \uC77C\uC815\uB3C4 \uC804\uBD80 \uBE44\uC6CC\uB1A8\uB2E4\uB358\uB370. \uC544\uBB34\uB798\uB3C4
-      \uC2EC\uC0C1\uCE58 \uC54A\uC544."
+    line: "\uC544\uBB34\uB798\uB3C4 \uADF8 \uD22C\uC790 \uAC74 \uB54C\uBB38\uC774
+      \uC544\uB2D0\uAE4C?\n\uB204\uAD70\uAC00\uD55C\uD14C \uC6D0\uD55C\uC744 \uC0C0\uC744
+      \uC218\uB3C4 \uC788\uACE0."
     audioClip: {fileID: 8300000, guid: bba1166167910ff489820388a56c9fd6, type: 3}
     nameColor: {r: 0, g: 0.5773585, b: 0.29552418, a: 1}
   - characterName: "\uAC04\uD638\uC0AC"
