@@ -11,6 +11,7 @@ public class HospitalManager : MonoBehaviour
     public DialogueScript foyerDialogue;
     public DialogueScript hernyOfficeDialogue;
     public DialogueScript administrativeOfficeDialogue;
+    public DialogueScript strategicPlanningOfficeDialogue;
 
     public GameObject dialogue;
     public GameObject investigationUI;
@@ -19,6 +20,8 @@ public class HospitalManager : MonoBehaviour
     public Transform hernyOfficePos;
     public Transform hernyOfficeLookTarget;
     public Transform administrativeOfficePos;
+    public Transform strategicPlanningOfficePos;
+    public Transform strategicPlanningOfficeLookTarget;
 
     public Nurse nurse;
     public Player player;
@@ -33,7 +36,7 @@ public class HospitalManager : MonoBehaviour
 
     private AudioSource audioSource;
     private Text npcName;
-    private Text line;
+    private Text lineText;
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -46,7 +49,7 @@ public class HospitalManager : MonoBehaviour
         }
 
         npcName = dialogue.transform.GetChild(1).GetChild(0).GetComponent<Text>();
-        line = dialogue.transform.GetChild(1).GetChild(1).GetComponent<Text>();
+        lineText = dialogue.transform.GetChild(1).GetChild(1).GetComponent<Text>();
 
         player.transform.position = startPosition.position; // 플레이어 위치 초기화
         player.transform.rotation = Quaternion.Euler(new Vector3(0, -90, 0));
@@ -61,7 +64,7 @@ public class HospitalManager : MonoBehaviour
     {
         player.IsTalking = isTalking; // 대화 시작 시 플레이어 대화 상태 설정
         npcName.text = "";
-        line.text = "";
+        lineText.text = "";
     }
 
     private IEnumerator PlaySoliloquy()
@@ -283,6 +286,62 @@ public class HospitalManager : MonoBehaviour
         InitDialogueUI(false);
     }
 
+    public void StartStrategicPlanningOfficeDialogue(SpecialDoor door)
+    {
+        StartCoroutine(PlayStrategicPlanningOfficeDialogue(door));
+    }
+
+    private IEnumerator PlayStrategicPlanningOfficeDialogue(SpecialDoor door)
+    {
+        InitDialogueUI(true);        
+
+        yield return StartCoroutine(FadeUtility.Instance.FadeIn(screen, 2f));
+        player.transform.position = strategicPlanningOfficePos.transform.position;
+        yield return StartCoroutine(FadeUtility.Instance.FadeOut(screen, 2f));
+        player.LookAtPosition(strategicPlanningOfficeLookTarget);
+
+        Slide(true);
+        
+        yield return new WaitForSeconds(2f);
+
+        int tmpIndex = 0;
+        foreach (DialogueLine line in strategicPlanningOfficeDialogue.dialogueLines)
+        {
+            if (line.audioClip != null)
+            {                
+                npcName.color = line.nameColor;
+                npcName.text = line.characterName;
+
+                if (tmpIndex == 5)
+                {
+                    npcName.text = "";
+                    lineText.text = "";
+
+                    yield return StartCoroutine(FadeUtility.Instance.FadeIn(screen, 1f));
+                    door.StartOpenCoroutine();
+                    yield return new WaitForSeconds(2f);
+                    yield return StartCoroutine(FadeUtility.Instance.FadeOut(screen, 1f));
+
+                    npcName.text = "수잔";
+                }
+
+                audioSource.clip = line.audioClip;
+                audioSource.Play();                
+
+                // 대사를 한 글자씩 출력
+                yield return StartCoroutine(TypeLine(line.line));
+
+                // 대사가 다 나온 후 오디오 종료까지 대기
+                float remainingTime = line.audioClip.length - line.line.Length * typeSpeed;
+                tmpIndex += 1;
+                yield return new WaitForSeconds(Mathf.Max(0f, remainingTime + 0.5f));
+            }
+        }
+
+        Slide(false);
+
+        InitDialogueUI(false);
+    }
 
 
 
@@ -291,11 +350,11 @@ public class HospitalManager : MonoBehaviour
 
     private IEnumerator TypeLine(string sentence)
     {
-        line.text = ""; // 기존 텍스트 초기화
+        lineText.text = ""; // 기존 텍스트 초기화
 
         foreach (char c in sentence)
         {
-            line.text += c;
+            lineText.text += c;
             yield return new WaitForSeconds(typeSpeed);
         }
     }
@@ -309,7 +368,7 @@ public class HospitalManager : MonoBehaviour
 
         npcName.text = "수잔";
         npcName.color = new Color32(0xA0, 0x00, 0x00, 0xFF); // 0xA00000 + 완전 불투명
-        line.text = "";
+        lineText.text = "";
 
         Slide(true, 0.3f);
         yield return new WaitForSeconds(1f);
@@ -342,12 +401,12 @@ public class HospitalManager : MonoBehaviour
         if(isTalking)
         {
             StartCoroutine(FadeUtility.Instance.FadeIn(npcName, duration));
-            StartCoroutine(FadeUtility.Instance.FadeIn(line, duration));
+            StartCoroutine(FadeUtility.Instance.FadeIn(lineText, duration));
         }
         else
         {
             StartCoroutine(FadeUtility.Instance.FadeOut(npcName, duration));
-            StartCoroutine(FadeUtility.Instance.FadeOut(line, duration));
+            StartCoroutine(FadeUtility.Instance.FadeOut(lineText, duration));
         }
     }
 

@@ -31,12 +31,18 @@ public class SpecialDoor : DoorBase
                 StartCoroutine(OpenCoroutine());
                 hospitalManager.StartAdministrativeOfficeDialogue();
                 break;
-
+            case "Strategic Planning Office":
+                hospitalManager.StartStrategicPlanningOfficeDialogue(this);
+                break;
         }
 
         boxCollider.enabled = false; // Disable the trigger collider after opening the door
     }
 
+    public void StartOpenCoroutine()
+    {
+        StartCoroutine(OpenCoroutine());
+    }
 
     protected override IEnumerator OpenCoroutine()
     {

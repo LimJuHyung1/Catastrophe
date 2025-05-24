@@ -60,8 +60,11 @@ public class HernyHomeManager : MonoBehaviour
 
         Slide(true);
 
+        int sophiaAnimIndex = 0;
+
         foreach (DialogueLine line in dialogueScript.dialogueLines)
-        {
+        {            
+
             if (line.audioClip != null)
             {
                 audioSource.clip = line.audioClip;
@@ -71,7 +74,10 @@ public class HernyHomeManager : MonoBehaviour
                 npcName.text = line.characterName;
 
                 if (npcName.text == "소피아")
-                    sophia.StartTalking();
+                {
+                    sophia.PlayDialogueAnimation(sophiaAnimIndex++);
+                    sophia.StartTalking();                    
+                }                    
                 else sophia.StopTalking();
 
                 // 대사를 한 글자씩 출력

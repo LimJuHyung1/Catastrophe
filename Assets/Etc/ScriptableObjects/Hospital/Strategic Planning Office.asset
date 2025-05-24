@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1055dd6230766be43bd0633be6407793, type: 3}
+  m_Name: Strategic Planning Office
+  m_EditorClassIdentifier: 
+  dialogueLines:
+  - characterName: "\uC9C1\uC6D0 A"
+    line: "\uBD80\uC6D0\uC7A5\uB2D8 \uD638\uCD9C\uC774\uC57C, \uC11C\uB458\uB7EC!"
+    audioClip: {fileID: 8300000, guid: efc304791ffb74b4cb7f18c92d47058b, type: 3}
+    nameColor: {r: 1, g: 0.9395876, b: 0.3150943, a: 1}
+  - characterName: "\uC9C1\uC6D0 B"
+    line: "\uBB34\uC2A8 \uC77C \uC788\uB098\uC694?"
+    audioClip: {fileID: 8300000, guid: 4b03eab823d7b3141a09faaca87f46a0, type: 3}
+    nameColor: {r: 0.27735847, g: 1, b: 0.728665, a: 1}
+  - characterName: "\uC9C1\uC6D0 A"
+    line: "\uAC11\uC790\uAE30 \uD55C \uAC80\uC0AC\uAC00 \uBD88\uC465 \uCC3E\uC544\uC654\uB300.
+      \uC6B0\uB9AC \uBCD1\uC6D0\uC744 \uC870\uC0AC\uD558\uB7EC \uC654\uB2E4\uB294\uAD70."
+    audioClip: {fileID: 8300000, guid: 9e1d73d993924864d849b5bedaca597e, type: 3}
+    nameColor: {r: 1, g: 0.9411765, b: 0.3137255, a: 1}
+  - characterName: "\uC9C1\uC6D0 A"
+    line: "\uBD80\uC6D0\uC7A5\uB2D8\uB3C4 \uBC29\uAE08 \uC18C\uC2DD \uB4E4\uC73C\uC2E0
+      \uBAA8\uC591\uC774\uC57C."
+    audioClip: {fileID: 8300000, guid: 40fb6fe2abc4ae24497d516f19e54382, type: 3}
+    nameColor: {r: 1, g: 0.9411765, b: 0.3137255, a: 1}
+  - characterName: "\uC9C1\uC6D0 B"
+    line: "\uC774\uB7F0... \uC54C\uACA0\uC5B4\uC694, \uBC14\uB85C \uAC08\uAC8C\uC694."
+    audioClip: {fileID: 8300000, guid: c9d4fc32652b88f42b13ed9160f8de43, type: 3}
+    nameColor: {r: 0.2784314, g: 1, b: 0.7294118, a: 1}
+  - characterName: "\uC218\uC794"
+    line: "\uC0DD\uAC01\uBCF4\uB2E4 \uBBFC\uAC10\uD558\uAC8C \uBC18\uC751\uD558\uB294\uAD70.
+      \uBB54\uAC00\uB97C \uAC10\uCD94\uB824 \uD558\uB294 \uAC83 \uAC19\uC544."
+    audioClip: {fileID: 8300000, guid: b14d7f576fe6efe4786c2d35ea008d72, type: 3}
+    nameColor: {r: 0.627451, g: 0, b: 0, a: 1}
+  - characterName: "\uC218\uC794"
+    line: "\uC800\uB4E4\uC774 \uB3CC\uC544\uC624\uAE30 \uC804\uC5D0 \uC870\uC0AC\uB97C
+      \uC2DC\uC791\uD558\uC790."
+    audioClip: {fileID: 8300000, guid: 25f5a935b27d0da4bb31d7570c7eebe1, type: 3}
+    nameColor: {r: 0.627451, g: 0, b: 0, a: 1}

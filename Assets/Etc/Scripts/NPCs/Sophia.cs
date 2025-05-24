@@ -29,6 +29,14 @@ public class Sophia : NPCRole
 
 
 
+    public void PlayDialogueAnimation(int index) 
+    {
+        animator.SetTrigger("Talk");
+        animator.SetInteger("Index", index);
+
+        Debug.Log("소피아 애니메이션 " + index);
+    }
+
     public void StartTalking()
     {
         cc.PlayBlendshapeAnimation("Talk", 3f); // 애니메이션 실행

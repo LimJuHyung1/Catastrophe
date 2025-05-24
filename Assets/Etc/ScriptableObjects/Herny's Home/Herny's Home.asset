@@ -36,8 +36,8 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: e403969cfb29d13419d64557e6ac2463, type: 3}
     nameColor: {r: 0.627451, g: 0, b: 0, a: 1}
   - characterName: "\uC18C\uD53C\uC544"
-    line: "\uC5B4\uC81C \uC800\uB141 6\uC2DC\uCBE4\uC774\uC5C8\uC5B4\uC694. \uC11C\uB458\uB7EC
-      \uC9D1\uC5D0\uC11C \uB098\uAC00\uB354\uAD70\uC694."
+    line: "\uC774\uD2C0 \uC804 \uC800\uB141 6\uC2DC\uCBE4\uC774\uC5C8\uC5B4\uC694.\n\uBB34\uC2A8
+      \uC77C \uC788\uB294 \uB4EF\uC774 \uAE09\uD558\uAC8C \uB098\uAC00\uB354\uB77C\uACE0\uC694."
     audioClip: {fileID: 8300000, guid: f56fdcfed46053d4aa54fdd2ac3e973f, type: 3}
     nameColor: {r: 0.5176471, g: 0.24705882, b: 0, a: 1}
   - characterName: "\uC18C\uD53C\uC544"

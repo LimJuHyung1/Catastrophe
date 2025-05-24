@@ -19,7 +19,7 @@ public class NPCRole : NPC
         Nason
     }
 
-    protected bool isReadyToTalk = true;
+    [SerializeField] protected bool isReadyToTalk = true;
     public bool IsReadyToTalk
     {
         get { return isReadyToTalk; }
